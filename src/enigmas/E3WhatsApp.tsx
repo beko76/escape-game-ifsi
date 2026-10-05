@@ -39,7 +39,7 @@ const MESSAGES: Msg[] = [
 
 function Chat() {
   return (
-    <div className="mx-auto w-full max-w-[420px] overflow-hidden rounded-[2rem] border-[10px] border-slate-800 bg-[#0b141a] shadow-2xl shadow-cyan-950/40">
+    <div className="mx-auto w-full max-w-[26.25rem] overflow-hidden rounded-[2rem] border-[0.625rem] border-slate-800 bg-[#0b141a] shadow-2xl shadow-cyan-950/40">
       <div className="flex items-center gap-3 bg-[#202c33] px-3 py-3 text-white">
         <ArrowLeft className="size-5 text-slate-300" />
         <div className="grid size-9 place-items-center rounded-full bg-teal-700 text-sm">🩺</div>
@@ -58,7 +58,7 @@ function Chat() {
           backgroundSize: '18px 18px',
         }}
       >
-        <p className="mx-auto w-fit rounded-md bg-[#182229] px-3 py-1 text-[11px] text-slate-400">AUJOURD'HUI</p>
+        <p className="mx-auto w-fit rounded-md bg-[#182229] px-3 py-1 text-[0.6875rem] text-slate-400">AUJOURD'HUI</p>
         {MESSAGES.map((m, i) => (
           <motion.div
             key={i}
@@ -69,13 +69,13 @@ function Chat() {
           >
             <div
               className={cn(
-                'max-w-[82%] rounded-lg px-3 py-1.5 text-[14px] leading-snug shadow',
+                'max-w-[82%] rounded-lg px-3 py-1.5 text-[0.875rem] leading-snug shadow',
                 m.me ? 'rounded-tr-none bg-[#005c4b] text-white' : 'rounded-tl-none bg-[#202c33] text-slate-100',
               )}
             >
               {!m.me && <p className={cn('text-xs font-semibold', m.color)}>{m.from}</p>}
               <p>{m.text}</p>
-              <p className="mt-0.5 flex items-center justify-end gap-1 text-[10px] text-slate-400">
+              <p className="mt-0.5 flex items-center justify-end gap-1 text-[0.625rem] text-slate-400">
                 {m.time}
                 {m.me && <CheckCheck className="size-3.5 text-sky-400" />}
               </p>

@@ -79,7 +79,7 @@ function TikTokPlayer() {
   const [playing, setPlaying] = useState(true)
 
   return (
-    <div className="mx-auto w-full max-w-[340px] rounded-[2.6rem] border-[10px] border-slate-800 bg-black shadow-2xl shadow-fuchsia-950/30">
+    <div className="mx-auto w-full max-w-[21.25rem] rounded-[2.6rem] border-[0.625rem] border-slate-800 bg-black shadow-2xl shadow-fuchsia-950/30">
       <button
         type="button"
         onClick={() => setPlaying((p) => !p)}
@@ -89,7 +89,7 @@ function TikTokPlayer() {
         {/* chambre d'hôpital */}
         <div className="absolute inset-x-0 top-0 h-[62%] bg-gradient-to-b from-[#dfe7ec] to-[#c4d0d8]" />
         <div className="absolute inset-x-0 bottom-0 h-[38%] bg-[#a5b4bf]" />
-        <div className="absolute left-[8%] top-[13%] rounded bg-[#1d4f91] px-2 py-1 text-[9px] font-bold text-white">
+        <div className="absolute left-[8%] top-[13%] rounded bg-[#1d4f91] px-2 py-1 text-[0.5625rem] font-bold text-white">
           ✚ CHU Saint-Exemple · Pneumologie
         </div>
         {/* lit avec patient */}
@@ -119,19 +119,19 @@ function TikTokPlayer() {
         </div>
         <div className="absolute bottom-24 right-2 flex flex-col items-center gap-4 text-white drop-shadow">
           <div className="grid size-10 place-items-center rounded-full border-2 border-white bg-fuchsia-500 text-xs font-bold">CE</div>
-          <span className="flex flex-col items-center text-[11px] font-semibold">
+          <span className="flex flex-col items-center text-[0.6875rem] font-semibold">
             <Heart className="size-7 fill-rose-500 text-rose-500" />
             48,2 k
           </span>
-          <span className="flex flex-col items-center text-[11px] font-semibold">
+          <span className="flex flex-col items-center text-[0.6875rem] font-semibold">
             <MessageCircle className="size-7 fill-white" />
             1 204
           </span>
-          <span className="flex flex-col items-center text-[11px] font-semibold">
+          <span className="flex flex-col items-center text-[0.6875rem] font-semibold">
             <Bookmark className="size-7 fill-white" />
             3 018
           </span>
-          <span className="flex flex-col items-center text-[11px] font-semibold">
+          <span className="flex flex-col items-center text-[0.6875rem] font-semibold">
             <Share2 className="size-7" />
             9 877
           </span>
@@ -230,7 +230,7 @@ export function E6TikTok() {
       briefing="Cette vidéo d'une étudiante a été vue 600 000 fois. La direction de l'hôpital a été interpellée par la famille d'un patient. Analysez-la à l'aide de la Charte."
       question="Combien de règles de la Charte du Soignant Connecté cette vidéo transgresse-t-elle ?"
     >
-      <div className="grid items-start gap-6 xl:grid-cols-[340px_minmax(0,1fr)]">
+      <div className="grid items-start gap-6 xl:grid-cols-[21.25rem_minmax(0,1fr)]">
         <TikTokPlayer />
         <Charter />
       </div>

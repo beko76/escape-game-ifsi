@@ -28,7 +28,7 @@ export function EnigmaShell({ enigma, briefing, question, children, aside }: Pro
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -8 }}
       transition={{ duration: 0.3 }}
-      className="mx-auto max-w-6xl px-4 py-6"
+      className="mx-auto max-w-7xl px-4 py-6"
     >
       <Button variant="ghost" size="sm" onClick={() => open(null)} className="-ml-2 mb-4">
         <ArrowLeft /> Retour aux pièces d'investigation
@@ -52,7 +52,7 @@ export function EnigmaShell({ enigma, briefing, question, children, aside }: Pro
         </div>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_380px]">
+      <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_23.75rem]">
         <div className="min-w-0">{children}</div>
         <div className="space-y-4 lg:sticky lg:top-24 lg:self-start">
           <AnswerPanel enigma={enigma} question={question} />

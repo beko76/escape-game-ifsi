@@ -19,7 +19,7 @@ export function Briefing() {
   }
 
   return (
-    <main className="mx-auto flex min-h-dvh max-w-3xl flex-col justify-center px-4 py-10">
+    <main className="mx-auto flex min-h-dvh max-w-4xl flex-col justify-center px-4 py-10">
       <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="mb-6 flex justify-center">
         <span className="inline-flex items-center gap-2 rounded-full border border-alert/50 bg-alert/10 px-4 py-1.5 font-mono text-xs uppercase tracking-[0.25em] text-alert">
           <span className="blink-alert size-2 rounded-full bg-alert" /> Incident en cours

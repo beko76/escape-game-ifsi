@@ -14,6 +14,10 @@
 
 html, body, #root { min-height: 100%; }
 
+/* Toute l'interface est en rem : on agrandit la taille de base sur les grands écrans
+   (16px jusqu'à ~1400px de large, ~20px en Full HD, jusqu'26px en 4K / vidéoprojecteur). */
+html { font-size: clamp(16px, calc(4px + 0.85vw), 26px); }
+
 body {
   margin: 0;
   background: #020617;

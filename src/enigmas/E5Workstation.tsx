@@ -54,7 +54,7 @@ function Hotspot({
       className={cn(
         'absolute rounded-lg outline-2 outline-offset-2 transition-[outline-color,box-shadow]',
         reveal ? 'cursor-default' : 'cursor-pointer hover:outline-dashed hover:outline-neon/60',
-        !reveal && flagged && 'outline-solid outline-warn shadow-[0_0_24px_-2px_rgb(251_191_36/0.6)]',
+        !reveal && flagged && 'outline-solid outline-warn shadow-[0_0_1.5rem_-0.125rem_rgb(251_191_36/0.6)]',
         reveal && spot.isError && 'outline-solid outline-med',
         reveal && !spot.isError && 'opacity-60',
         className,
@@ -85,7 +85,7 @@ function Scene({ flagged, reveal, toggle }: { flagged: Set<string>; reveal: bool
 
   return (
     <div className="-mx-4 overflow-x-auto px-4 pb-2 sm:mx-0 sm:px-0">
-      <div className="relative aspect-[16/11] min-w-[620px] overflow-hidden rounded-2xl border border-line bg-gradient-to-b from-[#1c2b3f] to-[#121c2b]">
+      <div className="relative aspect-[16/11] min-w-[38.75rem] overflow-hidden rounded-2xl border border-line bg-gradient-to-b from-[#1c2b3f] to-[#121c2b]">
         {/* mur + bureau */}
         <div className="absolute inset-x-0 bottom-0 h-[30%] bg-gradient-to-b from-[#6b4f3a] to-[#4d3828]" />
         <div className="absolute inset-x-0 bottom-[30%] h-1.5 bg-[#83634a]" />
@@ -97,21 +97,21 @@ function Scene({ flagged, reveal, toggle }: { flagged: Set<string>; reveal: bool
           <div className="absolute bottom-0 left-[50%] h-[65%] w-[24%] rounded-t-full bg-slate-800/80" />
           <div className="absolute bottom-[58%] left-[52%] size-[22%] rounded-full bg-slate-800/80" />
           <div className="absolute bottom-[50%] left-[17%] size-[18%] rounded-full bg-slate-700/80" />
-          <span className="absolute inset-x-0 top-1 text-center text-[10px] font-bold text-slate-700">COULOIR · Visiteurs</span>
+          <span className="absolute inset-x-0 top-1 text-center text-[0.625rem] font-bold text-slate-700">COULOIR · Visiteurs</span>
           <svg className="absolute inset-0 h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden>
             <path d="M60 45 L100 30 L100 70Z" fill="rgb(251 191 36 / 0.25)" />
           </svg>
         </Hotspot>
 
         {/* Écran */}
-        <div className="absolute left-[27%] top-[5%] h-[60%] w-[48%] rounded-xl border-[6px] border-slate-800 bg-slate-900 shadow-2xl">
+        <div className="absolute left-[27%] top-[5%] h-[60%] w-[48%] rounded-xl border-[0.375rem] border-slate-800 bg-slate-900 shadow-2xl">
           <div className="flex h-full flex-col overflow-hidden rounded-md bg-[#eef3f8] text-slate-800">
-            <Hotspot {...hp('session')} className="relative! flex w-full items-center gap-1.5 rounded-none bg-[#1d4f91] px-2 py-1 text-left text-[10px] text-white">
+            <Hotspot {...hp('session')} className="relative! flex w-full items-center gap-1.5 rounded-none bg-[#1d4f91] px-2 py-1 text-left text-[0.625rem] text-white">
               <Unlock className="size-3 text-amber-300" />
               <span className="font-semibold">DPI · Session : IDE M. MARTIN</span>
               <span className="ml-auto text-white/70">connectée depuis 06:12</span>
             </Hotspot>
-            <div className="flex flex-1 text-[9px]">
+            <div className="flex flex-1 text-[0.5625rem]">
               <div className="w-[28%] space-y-1 border-r border-slate-300 bg-white p-1.5">
                 <p className="font-bold text-[#1d4f91]">Patients · Unité 3</p>
                 {['Ch.301 — B. Henri', 'Ch.302 — L. Sarah', 'Ch.305 — G. Paul', 'Ch.307 — K. Anaïs'].map((p, i) => (
@@ -121,7 +121,7 @@ function Scene({ flagged, reveal, toggle }: { flagged: Set<string>; reveal: bool
                 ))}
               </div>
               <div className="flex-1 p-1.5">
-                <Hotspot {...hp('psy')} className="relative! block h-full w-full rounded border border-rose-300 bg-white p-1.5 text-left">
+                <Hotspot {...hp('psy')} className="relative! flex h-full w-full flex-col justify-start rounded border border-rose-300 bg-white p-1.5 text-left">
                   <p className="font-bold text-rose-700">PSYCHIATRIE · Notes d'entretien — CONFIDENTIEL</p>
                   <p className="mt-1 text-slate-500">Patient : G. Paul, 42 ans</p>
                   <div className="mt-1 space-y-1">
@@ -135,7 +135,7 @@ function Scene({ flagged, reveal, toggle }: { flagged: Set<string>; reveal: bool
             </div>
           </div>
           {/* Post-it */}
-          <Hotspot {...hp('postit')} className="-right-[9%] top-[8%] w-[22%] rotate-6 rounded-sm bg-yellow-300 p-1.5 text-left font-[cursive] text-[10px] leading-tight text-slate-800 shadow-md">
+          <Hotspot {...hp('postit')} className="-right-[9%] top-[8%] w-[22%] rotate-6 rounded-sm bg-yellow-300 p-1.5 text-left font-[cursive] text-[0.625rem] leading-tight text-slate-800 shadow-md">
             mdp DPI :<br />
             <b>Soleil2026!</b>
           </Hotspot>
@@ -145,24 +145,24 @@ function Scene({ flagged, reveal, toggle }: { flagged: Set<string>; reveal: bool
 
         {/* Clavier */}
         <div className="absolute left-[32%] top-[76%] h-[9%] w-[34%] rounded-md border border-slate-500 bg-slate-300 shadow">
-          <div className="grid h-full grid-cols-12 gap-[2px] p-1">
+          <div className="grid h-full grid-cols-12 gap-[0.125rem] p-1">
             {Array.from({ length: 36 }).map((_, i) => (
-              <span key={i} className="rounded-[2px] bg-slate-100" />
+              <span key={i} className="rounded-[0.125rem] bg-slate-100" />
             ))}
           </div>
         </div>
 
         {/* Clé USB branchée au clavier */}
-        <Hotspot {...hp('usb')} className="left-[66.5%] top-[77%] flex h-[6%] w-[11%] items-center rounded-sm bg-fuchsia-500 px-1 text-[8px] font-bold text-white">
-          <span className="mr-1 h-[60%] w-2 rounded-[1px] bg-slate-300" />
+        <Hotspot {...hp('usb')} className="left-[66.5%] top-[77%] flex h-[6%] w-[11%] items-center rounded-sm bg-fuchsia-500 px-1 text-[0.5rem] font-bold text-white">
+          <span className="mr-1 h-[60%] w-2 rounded-[0.0625rem] bg-slate-300" />
           PERSO 64Go
         </Hotspot>
 
         {/* Lecteur CPS + carte */}
         <Hotspot {...hp('cps')} className="left-[79%] top-[64%] h-[22%] w-[13%] rounded-md bg-slate-800 p-1">
-          <div className="absolute -top-[45%] left-[12%] h-[70%] w-[76%] rounded-md border border-emerald-700 bg-gradient-to-br from-emerald-400 to-emerald-700 p-1 text-left text-[7px] font-bold text-white">
+          <div className="absolute -top-[45%] left-[12%] h-[70%] w-[76%] rounded-md border border-emerald-700 bg-gradient-to-br from-emerald-400 to-emerald-700 p-1 text-left text-[0.4375rem] font-bold text-white">
             CPS
-            <span className="mt-1 block h-2 w-3 rounded-[2px] bg-amber-300" />
+            <span className="mt-1 block h-2 w-3 rounded-[0.125rem] bg-amber-300" />
             <span className="mt-0.5 block font-normal">MARTIN M.</span>
           </div>
           <span className="absolute bottom-1 left-1/2 size-1.5 -translate-x-1/2 rounded-full bg-emerald-400" />
@@ -171,18 +171,18 @@ function Scene({ flagged, reveal, toggle }: { flagged: Set<string>; reveal: bool
         {/* Leurres */}
         <Hotspot {...hp('phone')} className="left-[6%] top-[70%] h-[16%] w-[15%] rounded-lg bg-slate-700 p-1">
           <div className="h-[35%] rounded bg-slate-900" />
-          <div className="mt-1 grid grid-cols-3 gap-[2px]">
+          <div className="mt-1 grid grid-cols-3 gap-[0.125rem]">
             {Array.from({ length: 6 }).map((_, i) => (
-              <span key={i} className="h-1.5 rounded-[2px] bg-slate-400" />
+              <span key={i} className="h-1.5 rounded-[0.125rem] bg-slate-400" />
             ))}
           </div>
         </Hotspot>
         <Hotspot {...hp('gel')} className="left-[93%] top-[56%] h-[26%] w-[5%] rounded-t-md rounded-b-sm bg-sky-200/90">
           <span className="absolute -top-[18%] left-1/2 h-[20%] w-[40%] -translate-x-1/2 rounded-t bg-slate-200" />
-          <span className="absolute inset-x-0 top-[40%] text-center text-[7px] font-bold text-sky-800">SHA</span>
+          <span className="absolute inset-x-0 top-[40%] text-center text-[0.4375rem] font-bold text-sky-800">SHA</span>
         </Hotspot>
         <Hotspot {...hp('mug')} className="left-[22%] top-[71%] h-[12%] w-[6%] rounded-b-lg rounded-t-sm bg-white">
-          <span className="absolute -right-[40%] top-[20%] h-[50%] w-[45%] rounded-r-full border-[3px] border-l-0 border-white" />
+          <span className="absolute -right-[40%] top-[20%] h-[50%] w-[45%] rounded-r-full border-[0.1875rem] border-l-0 border-white" />
         </Hotspot>
       </div>
     </div>

@@ -14,7 +14,7 @@ export function Victory() {
   const totalErrors = Object.values(state.errors).reduce((a, b) => a + (b ?? 0), 0) + state.lockAttempts
 
   return (
-    <motion.section initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mx-auto max-w-5xl px-4 py-8">
+    <motion.section initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mx-auto max-w-6xl px-4 py-8">
       <div className="text-center">
         <motion.div
           initial={{ scale: 0, rotate: -20 }}

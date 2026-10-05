@@ -71,7 +71,7 @@ export function FinalLock() {
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0 }}
-      className="mx-auto max-w-2xl px-4 py-6"
+      className="mx-auto max-w-3xl px-4 py-6"
     >
       <Button variant="ghost" size="sm" onClick={() => open(null)} className="-ml-2 mb-4">
         <ArrowLeft /> Retour aux pièces d'investigation
@@ -145,7 +145,7 @@ export function FinalLock() {
               >
                 <ChevronDown className="size-6" />
               </button>
-              <span className="font-mono text-[10px] text-slate-600">E{i + 1}</span>
+              <span className="font-mono text-[0.625rem] text-slate-600">E{i + 1}</span>
             </div>
           ))}
         </div>

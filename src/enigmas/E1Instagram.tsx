@@ -48,7 +48,7 @@ function StoryMockup() {
   return (
     <div className="flex flex-col items-center gap-3">
       {/* Smartphone */}
-      <div className="relative w-full max-w-[340px] rounded-[2.6rem] border-[10px] border-slate-800 bg-slate-900 shadow-2xl shadow-cyan-950/40">
+      <div className="relative w-full max-w-[21.25rem] rounded-[2.6rem] border-[0.625rem] border-slate-800 bg-slate-900 shadow-2xl shadow-cyan-950/40">
         <div className="absolute left-1/2 top-2 z-20 h-5 w-24 -translate-x-1/2 rounded-full bg-black" />
         <div className="relative aspect-[9/17] overflow-hidden rounded-[1.9rem] bg-gradient-to-b from-[#1b2a3a] to-[#0d1724]">
           {/* Barre de progression story */}
@@ -64,8 +64,8 @@ function StoryMockup() {
             <div className="h-0.5 flex-1 rounded bg-white/30" />
           </div>
           <div className="absolute inset-x-3 top-11 z-20 flex items-center gap-2 text-white">
-            <div className="rounded-full bg-gradient-to-tr from-amber-400 via-pink-500 to-purple-600 p-[2px]">
-              <div className="grid size-7 place-items-center rounded-full bg-slate-900 text-[10px] font-bold">LM</div>
+            <div className="rounded-full bg-gradient-to-tr from-amber-400 via-pink-500 to-purple-600 p-[0.125rem]">
+              <div className="grid size-7 place-items-center rounded-full bg-slate-900 text-[0.625rem] font-bold">LM</div>
             </div>
             <span className="text-xs font-semibold">lucas.esi_</span>
             <span className="text-xs text-white/60">2 h</span>
@@ -81,12 +81,12 @@ function StoryMockup() {
             <div className="absolute inset-x-0 top-0 h-[55%] bg-gradient-to-b from-[#c9d6dd] to-[#aebdc6]" />
             <div className="absolute inset-x-0 top-[55%] h-[45%] bg-[#8fa3ad]" />
             {/* tableau blanc */}
-            <div className="absolute left-[6%] top-[19%] w-[62%] rounded-sm border-[3px] border-slate-400 bg-white p-1.5 shadow-md">
-              <p className="mb-1 text-center text-[7px] font-bold uppercase tracking-wide text-blue-800">
+            <div className="absolute left-[6%] top-[19%] w-[62%] rounded-sm border-[0.1875rem] border-slate-400 bg-white p-1.5 shadow-md">
+              <p className="mb-1 text-center text-[0.4375rem] font-bold uppercase tracking-wide text-blue-800">
                 Unité Médecine B · Nuit
               </p>
               {BOARD.map((b) => (
-                <div key={b.room} className="flex gap-1 border-t border-slate-200 py-[2px] text-[6.5px] leading-tight">
+                <div key={b.room} className="flex gap-1 border-t border-slate-200 py-[0.125rem] text-[0.4062rem] leading-tight">
                   <span className="font-bold text-red-600">Ch.{b.room}</span>
                   <span className="font-semibold text-slate-800">{b.name}</span>
                   <span className="text-blue-900">{b.info}</span>

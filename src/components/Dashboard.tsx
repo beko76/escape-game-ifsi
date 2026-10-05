@@ -14,7 +14,7 @@ export function Dashboard() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="mx-auto max-w-6xl px-4 py-6 sm:py-8"
+      className="mx-auto max-w-7xl px-4 py-6 sm:py-8"
     >
       <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
         <div>
