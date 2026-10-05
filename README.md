@@ -66,7 +66,7 @@ Sans ces variables, l'application fonctionne entièrement hors ligne, sans suivi
 
 **Données stockées :** noms d'équipe et progression de jeu uniquement, sans aucune donnée personnelle. Toute personne disposant de l'application peut techniquement lire ou modifier ces données, ce qui est acceptable pour un jeu pédagogique.
 
-**Développement local :** `npx supabase start` lance une base locale (Docker requis) sur le port 55321. Mettez ses URL et clé dans `.env.local`.
+**Développement local :** `npx supabase start` lance une base locale (Docker requis) sur le port 55321. Mettez ses URL et clé dans `.env.development.local` (utilisé par `npm run dev` seulement).
 
 ## Développement
 
