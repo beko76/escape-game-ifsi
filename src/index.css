@@ -1,0 +1,84 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "Cascadia Code", Consolas, monospace;
+  --color-neon: #22d3ee;
+  --color-med: #34d399;
+  --color-alert: #f43f5e;
+  --color-warn: #fbbf24;
+  --color-panel: #0b1426;
+  --color-panel-2: #101c33;
+  --color-line: #1e2d4a;
+}
+
+html, body, #root { min-height: 100%; }
+
+body {
+  margin: 0;
+  background: #020617;
+  color: #e2e8f0;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Grille "cyber" en fond */
+.bg-cyber {
+  background-color: #020617;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgb(34 211 238 / 0.14), transparent 70%),
+    linear-gradient(rgb(34 211 238 / 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(34 211 238 / 0.045) 1px, transparent 1px);
+  background-size: 100% 100%, 32px 32px, 32px 32px;
+  background-attachment: fixed;
+}
+
+@utility glow-neon { box-shadow: 0 0 0 1px rgb(34 211 238 / 0.35), 0 0 24px -4px rgb(34 211 238 / 0.45); }
+@utility glow-med { box-shadow: 0 0 0 1px rgb(52 211 153 / 0.45), 0 0 24px -4px rgb(52 211 153 / 0.5); }
+@utility glow-alert { box-shadow: 0 0 0 1px rgb(244 63 94 / 0.5), 0 0 24px -4px rgb(244 63 94 / 0.55); }
+
+@utility text-glow { text-shadow: 0 0 18px rgb(34 211 238 / 0.55); }
+
+@keyframes scan {
+  from { transform: translateY(-100%); }
+  to { transform: translateY(100%); }
+}
+.scanline { position: relative; overflow: hidden; }
+.scanline::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, transparent, rgb(34 211 238 / 0.06), transparent);
+  animation: scan 5s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes blink-alert {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+.blink-alert { animation: blink-alert 1s steps(2, start) infinite; }
+
+/* Impression : seule la fiche "règles d'or" est imprimée */
+@media print {
+  body * { visibility: hidden !important; }
+  #print-area, #print-area * { visibility: visible !important; }
+  #print-area {
+    position: absolute; left: 0; top: 0; width: 100%;
+    padding: 24px;
+    background: white !important; color: black !important;
+  }
+  #print-area * { color: black !important; background: transparent !important; border-color: #999 !important; box-shadow: none !important; }
+  .print-hide { display: none !important; }
+}
+
+/* Danseuse de l'énigme TikTok : rotation autour des épaules / hanches */
+.dance-arm-l, .dance-arm-r, .dance-leg-l, .dance-leg-r { transform-box: view-box; }
+.dance-arm-l { transform-origin: 40px 76px; animation: arm-l 0.9s ease-in-out infinite; }
+.dance-arm-r { transform-origin: 80px 76px; animation: arm-r 0.9s ease-in-out infinite; }
+.dance-leg-l { transform-origin: 51px 134px; animation: leg 0.9s ease-in-out infinite; }
+.dance-leg-r { transform-origin: 69px 134px; animation: leg 0.9s ease-in-out infinite reverse; }
+.dance-paused { animation-play-state: paused; }
+@keyframes arm-l { 0%, 100% { transform: rotate(-12deg); } 50% { transform: rotate(28deg); } }
+@keyframes arm-r { 0%, 100% { transform: rotate(-28deg); } 50% { transform: rotate(12deg); } }
+@keyframes leg { 0%, 100% { transform: rotate(-7deg); } 50% { transform: rotate(7deg); } }
