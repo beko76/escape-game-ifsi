@@ -2,7 +2,7 @@ import { ArrowLeft, Eye, EyeOff, Gamepad2, Maximize, MonitorPlay } from 'lucide-
 import { useEffect, useState } from 'react'
 import { Button } from '../components/ui/button'
 import { Card } from '../components/ui/card'
-import { ONLINE, supabase } from '../online/client'
+import { ONLINE, supabase, TABLES } from '../online/client'
 import { JoinPanel } from './JoinPanel'
 import { PasswordGate } from './PasswordGate'
 import { SessionPicker } from './SessionPicker'
@@ -33,7 +33,7 @@ export function TeacherDashboard({ code }: { code: string | null }) {
     setMissing(false)
     if (!code || !supabase) return
     void supabase
-      .from('sessions')
+      .from(TABLES.sessions)
       .select('label')
       .eq('code', code)
       .maybeSingle()

@@ -3,7 +3,7 @@ import { CheckCircle2, Clock, Lightbulb, Lock, Medal, Radio, Trash2, Users, Wifi
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Card } from '../components/ui/card'
 import { ENIGMAS, GAME_DURATION_MS } from '../game/config'
-import { supabase, type TeamRow } from '../online/client'
+import { supabase, TABLES, type TeamRow } from '../online/client'
 import { cn, formatDuration } from '../lib/utils'
 
 /** Au-delà, une équipe sans « battement de cœur » est signalée comme déconnectée. */
@@ -98,7 +98,7 @@ export function TeamBoard({ code }: { code: string }) {
   const [now, setNow] = useState(() => Date.now())
 
   const fetchTeams = useCallback(async () => {
-    const { data, error } = await supabase!.from('teams').select('*').eq('session', code)
+    const { data, error } = await supabase!.from(TABLES.teams).select('*').eq('session', code)
     if (!error && data) setTeams(data as TeamRow[])
     else if (error) setLive('error')
   }, [code])
@@ -107,8 +107,8 @@ export function TeamBoard({ code }: { code: string }) {
     void fetchTeams()
     // Temps réel : chaque changement d'une équipe de la séance est appliqué immédiatement
     const channel = supabase!
-      .channel(`teams-${code}`)
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'teams' }, (payload) => {
+      .channel(`${TABLES.teams}-${code}`)
+      .on('postgres_changes', { event: '*', schema: 'public', table: TABLES.teams }, (payload) => {
         if (payload.eventType === 'DELETE') {
           const id = (payload.old as Partial<TeamRow>).id
           setTeams((ts) => ts?.filter((t) => t.id !== id) ?? ts)
@@ -140,7 +140,7 @@ export function TeamBoard({ code }: { code: string }) {
   const remove = async (t: TeamRow) => {
     if (!confirm(`Retirer l'équipe « ${t.team} » du tableau de bord ?`)) return
     setTeams((ts) => ts?.filter((x) => x.id !== t.id) ?? ts)
-    await supabase!.from('teams').delete().eq('id', t.id)
+    await supabase!.from(TABLES.teams).delete().eq('id', t.id)
   }
 
   const finished = ranked.filter((t) => t.finished_at)

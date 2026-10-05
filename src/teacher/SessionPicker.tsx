@@ -2,7 +2,7 @@ import { CalendarClock, ChevronRight, Loader2, Plus } from 'lucide-react'
 import { useEffect, useState, type FormEvent } from 'react'
 import { Button } from '../components/ui/button'
 import { Card } from '../components/ui/card'
-import { generateCode, supabase, type SessionRow } from '../online/client'
+import { generateCode, supabase, TABLES, type SessionRow } from '../online/client'
 
 const dateFormat = new Intl.DateTimeFormat('fr-FR', { dateStyle: 'medium', timeStyle: 'short' })
 
@@ -15,7 +15,7 @@ export function SessionPicker({ onOpen }: { onOpen: (code: string) => void }) {
 
   useEffect(() => {
     void supabase!
-      .from('sessions')
+      .from(TABLES.sessions)
       .select('code,label,created_at')
       .order('created_at', { ascending: false })
       .limit(12)
@@ -32,7 +32,7 @@ export function SessionPicker({ onOpen }: { onOpen: (code: string) => void }) {
     // Quelques essais au cas (très improbable) où le code tiré existe déjà
     for (let attempt = 0; attempt < 4; attempt++) {
       const code = generateCode()
-      const { error } = await supabase!.from('sessions').insert({ code, label: label.trim() || null })
+      const { error } = await supabase!.from(TABLES.sessions).insert({ code, label: label.trim() || null })
       if (!error) {
         setCreating(false)
         onOpen(code)

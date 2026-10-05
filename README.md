@@ -50,7 +50,7 @@ Sans code de séance, la partie fonctionne normalement mais n'apparaît pas au t
 
 Le suivi utilise [Supabase](https://supabase.com), avec l'offre gratuite.
 
-1. Créez un compte et un projet sur supabase.com. La région Europe (Paris ou Francfort) est conseillée.
+1. Utilisez un projet Supabase existant, ou créez-en un (région Europe conseillée). Les tables sont préfixées `escape_` (`escape_sessions`, `escape_teams`) et cohabitent sans risque avec celles d'une autre application.
 2. Ouvrez **SQL Editor**, collez le contenu de [supabase/migrations/20261005000000_suivi_equipes.sql](supabase/migrations/20261005000000_suivi_equipes.sql), puis cliquez sur **Run**.
 3. Dans **Project Settings → API**, copiez la *Project URL* et la clé publique *anon*.
 4. Créez un fichier `.env` à la racine du projet :

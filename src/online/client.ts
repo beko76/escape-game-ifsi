@@ -9,6 +9,9 @@ export const supabase =
 
 export const ONLINE = supabase !== null
 
+/** Tables préfixées : elles peuvent cohabiter avec celles d'une autre application dans le même projet Supabase. */
+export const TABLES = { sessions: 'escape_sessions', teams: 'escape_teams' } as const
+
 export interface SessionRow {
   code: string
   label: string | null
@@ -57,7 +60,7 @@ export type SessionCheck = 'ok' | 'unknown' | 'network'
 
 export async function checkSession(code: string): Promise<SessionCheck> {
   if (!supabase) return 'network'
-  const { data, error } = await supabase.from('sessions').select('code').eq('code', code).maybeSingle()
+  const { data, error } = await supabase.from(TABLES.sessions).select('code').eq('code', code).maybeSingle()
   if (error) return 'network'
   return data ? 'ok' : 'unknown'
 }

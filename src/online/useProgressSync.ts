@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import type { GameState } from '../game/GameContext'
-import { supabase, type TeamRow } from './client'
+import { supabase, TABLES, type TeamRow } from './client'
 
 export type SyncStatus = 'off' | 'pending' | 'ok' | 'error'
 
@@ -45,7 +45,7 @@ export function useProgressSync(state: GameState): SyncStatus {
     setStatus((s) => (s === 'off' ? 'pending' : s))
 
     const send = async () => {
-      const { error } = await supabase!.from('teams').upsert({ ...payload, updated_at: new Date().toISOString() })
+      const { error } = await supabase!.from(TABLES.teams).upsert({ ...payload, updated_at: new Date().toISOString() })
       if (!cancelled) setStatus(error ? 'error' : 'ok')
     }
 
