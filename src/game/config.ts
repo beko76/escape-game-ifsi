@@ -93,11 +93,11 @@ export const ENIGMAS: EnigmaMeta[] = [
     subtitle: 'Le buzz qui fait tache',
     icon: Music2,
     answer: '5',
-    hint: "Observez la tenue, le matériel, le décor, l'arrière-plan… et l'image que la vidéo donne de la profession.",
+    hint: "Mettez la vidéo en pause et observez : la tenue, le logo, les panneaux, les numéros, le chariot… et l'image que la vidéo donne de la profession.",
     debrief: {
       law: 'Art. R. 4312-4 & R. 4312-6 CSP : dignité et image de la profession',
       takeaway:
-        "La tenue et le matériel de soins ne sont pas des accessoires. L'établissement reconnaissable et une personne en arrière-plan aggravent la faute.",
+        "La tenue n'est pas un costume. Logo IFPM, « service de chirurgie », chambre 210 et dossier « Mme DURAND » à l'écran : l'institut, le service et une patiente deviennent identifiables.",
     },
   },
 ]

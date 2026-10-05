@@ -49,4 +49,6 @@ src/
   components/ui/  Button, Card, Dialog
   enigmas/     E1Instagram … E6TikTok
   lib/         sound.ts (Web Audio), utils.ts
+public/
+  videos/tiktok-esi.mp4   vidéo de l'énigme 6 (remplaçable par un autre fichier du même nom)
 ```

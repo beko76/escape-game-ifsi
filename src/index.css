@@ -76,13 +76,3 @@ body {
   .print-hide { display: none !important; }
 }
 
-/* Danseuse de l'énigme TikTok : rotation autour des épaules / hanches */
-.dance-arm-l, .dance-arm-r, .dance-leg-l, .dance-leg-r { transform-box: view-box; }
-.dance-arm-l { transform-origin: 40px 76px; animation: arm-l 0.9s ease-in-out infinite; }
-.dance-arm-r { transform-origin: 80px 76px; animation: arm-r 0.9s ease-in-out infinite; }
-.dance-leg-l { transform-origin: 51px 134px; animation: leg 0.9s ease-in-out infinite; }
-.dance-leg-r { transform-origin: 69px 134px; animation: leg 0.9s ease-in-out infinite reverse; }
-.dance-paused { animation-play-state: paused; }
-@keyframes arm-l { 0%, 100% { transform: rotate(-12deg); } 50% { transform: rotate(28deg); } }
-@keyframes arm-r { 0%, 100% { transform: rotate(-28deg); } 50% { transform: rotate(12deg); } }
-@keyframes leg { 0%, 100% { transform: rotate(-7deg); } 50% { transform: rotate(7deg); } }
