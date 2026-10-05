@@ -9,7 +9,7 @@ import { TeacherDialog } from './TeacherDialog'
 import { Button } from './ui/button'
 
 export function Header() {
-  const { state, remainingMs, solvedCount } = useGame()
+  const { state, remainingMs, solvedCount, sync } = useGame()
   const won = state.phase === 'won'
   const overtime = remainingMs < 0
   const warning = !won && remainingMs <= WARNING_THRESHOLD_MS
@@ -33,6 +33,22 @@ export function Header() {
             <p className="flex items-center gap-1.5 truncate text-sm font-semibold text-white">
               <Users className="size-3.5 shrink-0 text-slate-400" />
               <span className="truncate">{state.team}</span>
+              {state.session && (
+                <span
+                  title={
+                    sync === 'error'
+                      ? 'Connexion au suivi enseignant perdue : nouvel essai automatique'
+                      : `Progression transmise en direct (séance ${state.session})`
+                  }
+                  className={cn(
+                    'ml-1 hidden shrink-0 items-center gap-1 rounded-full border px-2 py-0.5 font-mono text-[0.625rem] font-medium uppercase tracking-wider sm:inline-flex',
+                    sync === 'error' ? 'border-warn/50 text-warn' : 'border-med/40 text-med',
+                  )}
+                >
+                  <span className={cn('size-1.5 rounded-full', sync === 'error' ? 'bg-warn' : 'blink-alert bg-med')} />
+                  {sync === 'error' ? 'Hors ligne' : 'En direct'}
+                </span>
+              )}
             </p>
           </div>
         </div>

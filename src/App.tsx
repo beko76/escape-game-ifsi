@@ -1,5 +1,5 @@
 import { AnimatePresence } from 'framer-motion'
-import type { ComponentType } from 'react'
+import { lazy, Suspense, useEffect, useState, type ComponentType } from 'react'
 import { Briefing } from './components/Briefing'
 import { Dashboard } from './components/Dashboard'
 import { FinalLock } from './components/FinalLock'
@@ -14,6 +14,27 @@ import { E5Workstation } from './enigmas/E5Workstation'
 import { E6TikTok } from './enigmas/E6TikTok'
 import type { EnigmaId } from './game/config'
 import { GameProvider, useGame } from './game/GameContext'
+
+// Chargé à la demande : les équipes ne téléchargent pas le code du tableau de bord
+const TeacherDashboard = lazy(() => import('./teacher/TeacherDashboard').then((m) => ({ default: m.TeacherDashboard })))
+
+/** Route du tableau de bord enseignant : #/prof ou #/prof/CODE */
+function useTeacherRoute() {
+  const parse = () => {
+    const m = /^#\/prof(?:\/([A-Za-z0-9]+))?/.exec(location.hash)
+    return m ? { code: m[1]?.toUpperCase() ?? null } : null
+  }
+  const [route, setRoute] = useState(parse)
+  useEffect(() => {
+    const onHash = () => {
+      setRoute(parse())
+      window.scrollTo(0, 0)
+    }
+    window.addEventListener('hashchange', onHash)
+    return () => window.removeEventListener('hashchange', onHash)
+  }, [])
+  return route
+}
 
 const ENIGMA_VIEWS: Record<EnigmaId, ComponentType> = {
   1: E1Instagram,
@@ -49,6 +70,16 @@ function Game() {
 }
 
 export default function App() {
+  const teacher = useTeacherRoute()
+
+  if (teacher) {
+    return (
+      <Suspense fallback={<div className="bg-cyber min-h-dvh" />}>
+        <TeacherDashboard code={teacher.code} />
+      </Suspense>
+    )
+  }
+
   return (
     <GameProvider>
       <div className="bg-cyber min-h-dvh">

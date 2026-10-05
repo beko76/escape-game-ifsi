@@ -1,4 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
+import { uuid } from '../online/client'
+import { useProgressSync, type SyncStatus } from '../online/useProgressSync'
 import { ENIGMAS, GAME_DURATION_MS, STORAGE_KEY, type EnigmaId } from './config'
 
 export type Phase = 'briefing' | 'playing' | 'won'
@@ -6,6 +8,10 @@ export type Phase = 'briefing' | 'playing' | 'won'
 export interface GameState {
   phase: Phase
   team: string
+  /** Code de séance pour le suivi enseignant (null = partie hors ligne) */
+  session: string | null
+  /** Identifiant unique de la partie, côté base de données */
+  teamId: string | null
   startedAt: number | null
   finishedAt: number | null
   /** Énigme ouverte (null = tableau de bord, 'lock' = cadenas final) */
@@ -20,6 +26,8 @@ export interface GameState {
 const INITIAL: GameState = {
   phase: 'briefing',
   team: '',
+  session: null,
+  teamId: null,
   startedAt: null,
   finishedAt: null,
   view: null,
@@ -47,7 +55,8 @@ interface GameApi {
   elapsedMs: number
   solvedCount: number
   allSolved: boolean
-  start: (team: string) => void
+  sync: SyncStatus
+  start: (team: string, session: string | null) => void
   open: (view: GameState['view']) => void
   solve: (id: EnigmaId) => void
   addError: (id: EnigmaId) => void
@@ -87,6 +96,8 @@ export function GameProvider({ children }: { children: ReactNode }) {
     return () => clearInterval(t)
   }, [state.phase])
 
+  const sync = useProgressSync(state)
+
   const update = useCallback((fn: (s: GameState) => GameState) => setState(fn), [])
 
   const api = useMemo<GameApi>(() => {
@@ -100,8 +111,16 @@ export function GameProvider({ children }: { children: ReactNode }) {
       remainingMs: GAME_DURATION_MS - elapsedMs,
       solvedCount,
       allSolved: solvedCount === ENIGMAS.length,
-      start: (team) =>
-        update(() => ({ ...INITIAL, phase: 'playing', team: team.trim(), startedAt: Date.now() })),
+      sync,
+      start: (team, session) =>
+        update(() => ({
+          ...INITIAL,
+          phase: 'playing',
+          team: team.trim(),
+          session,
+          teamId: uuid(),
+          startedAt: Date.now(),
+        })),
       open: (view) => {
         window.scrollTo({ top: 0, behavior: 'smooth' })
         update((s) => ({ ...s, view }))
@@ -121,7 +140,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
         setState(INITIAL)
       },
     }
-  }, [state, now, update])
+  }, [state, now, sync, update])
 
   return <Ctx.Provider value={api}>{children}</Ctx.Provider>
 }

@@ -1,7 +1,8 @@
 import { motion } from 'framer-motion'
-import { AlertTriangle, KeyRound, Lock, Play, Radio, Timer, Users } from 'lucide-react'
+import { AlertTriangle, Hash, KeyRound, Loader2, Lock, Play, Radio, Timer, Users } from 'lucide-react'
 import { useState, type FormEvent } from 'react'
 import { useGame } from '../game/GameContext'
+import { checkSession, normalizeCode, ONLINE } from '../online/client'
 import { sound } from '../lib/sound'
 import { TeacherDialog } from './TeacherDialog'
 import { Button } from './ui/button'
@@ -10,12 +11,32 @@ import { Card } from './ui/card'
 export function Briefing() {
   const { start } = useGame()
   const [team, setTeam] = useState('')
+  // Code de séance transmis par le lien / QR code de l'enseignant (?seance=XXXXX)
+  const [code, setCode] = useState(() => normalizeCode(new URLSearchParams(location.search).get('seance') ?? ''))
+  const [checking, setChecking] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
-  const submit = (e: FormEvent) => {
+  const submit = async (e: FormEvent) => {
     e.preventDefault()
-    if (!team.trim()) return
+    if (!team.trim() || checking) return
+    let session: string | null = null
+    if (ONLINE && code) {
+      setChecking(true)
+      setError(null)
+      const result = await checkSession(code)
+      setChecking(false)
+      if (result === 'unknown') {
+        setError(`Le code de séance « ${code} » est introuvable. Vérifiez-le auprès de votre enseignant.`)
+        return
+      }
+      if (result === 'network') {
+        setError("Impossible de joindre le serveur de suivi. Vérifiez la connexion, ou videz le code pour jouer sans suivi.")
+        return
+      }
+      session = code
+    }
     sound.alarm()
-    start(team)
+    start(team, session)
   }
 
   return (
@@ -78,21 +99,56 @@ export function Briefing() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
         onSubmit={submit}
-        className="mt-6 flex flex-col gap-3 sm:flex-row"
+        className="mt-6"
       >
-        <label className="relative flex-1">
-          <span className="sr-only">Nom de l'équipe</span>
-          <Users className="pointer-events-none absolute left-4 top-1/2 size-5 -translate-y-1/2 text-slate-500" />
-          <input
-            value={team}
-            onChange={(e) => setTeam(e.target.value.slice(0, 30))}
-            placeholder="Nom de l'équipe (ex : Groupe A3)"
-            className="h-14 w-full rounded-xl border border-line bg-panel pl-12 pr-4 text-base text-white outline-none transition-colors placeholder:text-slate-500 focus:border-neon focus:glow-neon"
-          />
-        </label>
-        <Button type="submit" size="lg" className="h-14 px-8 text-base font-bold" disabled={!team.trim()}>
-          <Play className="size-5! fill-current" /> Lancer la mission
-        </Button>
+        <div className={ONLINE ? 'grid gap-3 sm:grid-cols-[minmax(0,1fr)_11rem_auto]' : 'grid gap-3 sm:grid-cols-[minmax(0,1fr)_auto]'}>
+          <label className="relative">
+            <span className="sr-only">Nom de l'équipe</span>
+            <Users className="pointer-events-none absolute left-4 top-1/2 size-5 -translate-y-1/2 text-slate-500" />
+            <input
+              value={team}
+              onChange={(e) => setTeam(e.target.value.slice(0, 30))}
+              placeholder="Nom de l'équipe (ex : Groupe A3)"
+              className="h-14 w-full rounded-xl border border-line bg-panel pl-12 pr-4 text-base text-white outline-none transition-colors placeholder:text-slate-500 focus:border-neon focus:glow-neon"
+            />
+          </label>
+          {ONLINE && (
+            <label className="relative">
+              <span className="sr-only">Code de séance</span>
+              <Hash className="pointer-events-none absolute left-4 top-1/2 size-5 -translate-y-1/2 text-slate-500" />
+              <input
+                value={code}
+                onChange={(e) => {
+                  setCode(normalizeCode(e.target.value))
+                  setError(null)
+                }}
+                placeholder="Code séance"
+                autoCapitalize="characters"
+                autoComplete="off"
+                spellCheck={false}
+                className="h-14 w-full rounded-xl border border-line bg-panel pl-12 pr-4 font-mono text-base uppercase tracking-widest text-white outline-none transition-colors placeholder:font-sans placeholder:normal-case placeholder:tracking-normal placeholder:text-slate-500 focus:border-neon focus:glow-neon"
+              />
+            </label>
+          )}
+          <Button type="submit" size="lg" className="h-14 px-8 text-base font-bold" disabled={!team.trim() || checking}>
+            {checking ? <Loader2 className="size-5! animate-spin" /> : <Play className="size-5! fill-current" />}
+            Lancer la mission
+          </Button>
+        </div>
+        {error ? (
+          <p className="mt-3 flex items-start gap-2 text-sm text-alert">
+            <AlertTriangle className="mt-0.5 size-4 shrink-0" />
+            {error}
+          </p>
+        ) : (
+          ONLINE && (
+            <p className="mt-3 text-xs text-slate-500">
+              {code
+                ? "Votre progression sera visible en direct par l'enseignant."
+                : "Sans code de séance, la partie fonctionne mais l'enseignant ne verra pas votre progression."}
+            </p>
+          )
+        )}
       </motion.form>
 
       <div className="mt-10 flex justify-center">

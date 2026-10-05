@@ -1,9 +1,10 @@
 import { motion, useAnimationControls } from 'framer-motion'
-import { KeyRound, RotateCcw } from 'lucide-react'
+import { KeyRound, MonitorPlay, RotateCcw } from 'lucide-react'
 import { useState, type FormEvent, type ReactNode } from 'react'
 import { TEACHER_PASSWORD } from '../game/config'
 import { useGame } from '../game/GameContext'
-import { Button } from './ui/button'
+import { cn } from '../lib/utils'
+import { Button, buttonVariants } from './ui/button'
 import { Dialog, DialogContent, DialogTrigger } from './ui/dialog'
 
 /** Réinitialisation protégée par le mot de passe enseignant. */
@@ -60,6 +61,16 @@ export function TeacherDialog({ trigger }: { trigger: ReactNode }) {
             <RotateCcw /> Réinitialiser pour une autre équipe
           </Button>
         </motion.form>
+        <div className="mt-5 border-t border-line pt-5">
+          <p className="text-sm text-slate-400">Suivre toutes les équipes en direct pendant la séance :</p>
+          <a
+            href="#/prof"
+            onClick={() => setOpen(false)}
+            className={cn(buttonVariants({ variant: 'outline' }), 'mt-3 w-full')}
+          >
+            <MonitorPlay /> Ouvrir le tableau de bord enseignant
+          </a>
+        </div>
       </DialogContent>
     </Dialog>
   )
