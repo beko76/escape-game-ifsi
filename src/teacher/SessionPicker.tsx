@@ -1,4 +1,4 @@
-import { CalendarClock, ChevronRight, Loader2, Plus } from 'lucide-react'
+import { CalendarClock, ChevronRight, Loader2, Plus, Trash2 } from 'lucide-react'
 import { useEffect, useState, type FormEvent } from 'react'
 import { Button } from '../components/ui/button'
 import { Card } from '../components/ui/card'
@@ -12,18 +12,32 @@ export function SessionPicker({ onOpen }: { onOpen: (code: string) => void }) {
   const [creating, setCreating] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [recent, setRecent] = useState<SessionRow[] | null>(null)
+  const [listError, setListError] = useState<string | null>(null)
+  const [deleting, setDeleting] = useState<string | null>(null)
 
   useEffect(() => {
     void supabase!
       .from(TABLES.sessions)
       .select('code,label,created_at')
       .order('created_at', { ascending: false })
-      .limit(12)
+      .limit(30)
       .then(({ data, error }) => {
         if (error) setError('Impossible de charger les séances : vérifiez la connexion.')
         setRecent(data ?? [])
       })
   }, [])
+
+  const remove = async (session: SessionRow) => {
+    const name = session.label ? `« ${session.label} » (${session.code})` : session.code
+    if (!confirm(`Supprimer définitivement la séance ${name} et toutes ses équipes ?`)) return
+    setListError(null)
+    setDeleting(session.code)
+    // Les équipes de la séance sont supprimées en cascade par la base
+    const { error } = await supabase!.from(TABLES.sessions).delete().eq('code', session.code)
+    setDeleting(null)
+    if (error) setListError('La suppression a échoué. Vérifiez la connexion et réessayez.')
+    else setRecent((r) => r?.filter((x) => x.code !== session.code) ?? r)
+  }
 
   const create = async (e: FormEvent) => {
     e.preventDefault()
@@ -71,6 +85,7 @@ export function SessionPicker({ onOpen }: { onOpen: (code: string) => void }) {
 
       <Card className="p-6">
         <h2 className="text-lg font-semibold text-white">Séances récentes</h2>
+        {listError && <p className="mt-2 text-sm text-alert">{listError}</p>}
         {recent === null ? (
           <p className="mt-4 flex items-center gap-2 text-sm text-slate-400">
             <Loader2 className="size-4 animate-spin" /> Chargement…
@@ -80,11 +95,11 @@ export function SessionPicker({ onOpen }: { onOpen: (code: string) => void }) {
         ) : (
           <ul className="mt-4 space-y-2">
             {recent.map((s) => (
-              <li key={s.code}>
+              <li key={s.code} className="flex items-center gap-2">
                 <button
                   type="button"
                   onClick={() => onOpen(s.code)}
-                  className="group flex w-full cursor-pointer items-center gap-3 rounded-lg border border-line bg-slate-950/50 p-3 text-left transition-colors hover:border-neon/60"
+                  className="group flex min-w-0 flex-1 cursor-pointer items-center gap-3 rounded-lg border border-line bg-slate-950/50 p-3 text-left transition-colors hover:border-neon/60"
                 >
                   <span className="rounded-md bg-neon/10 px-2 py-1 font-mono text-sm font-bold tracking-widest text-neon">
                     {s.code}
@@ -96,6 +111,16 @@ export function SessionPicker({ onOpen }: { onOpen: (code: string) => void }) {
                     </span>
                   </span>
                   <ChevronRight className="size-4 text-slate-500 group-hover:text-neon" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => remove(s)}
+                  disabled={deleting !== null}
+                  aria-label={`Supprimer la séance ${s.code}`}
+                  title="Supprimer la séance et ses équipes"
+                  className="grid size-11 shrink-0 cursor-pointer place-items-center rounded-lg border border-transparent text-slate-500 transition-colors hover:border-alert/40 hover:bg-alert/10 hover:text-alert disabled:cursor-wait disabled:opacity-60"
+                >
+                  {deleting === s.code ? <Loader2 className="size-4 animate-spin" /> : <Trash2 className="size-4" />}
                 </button>
               </li>
             ))}
