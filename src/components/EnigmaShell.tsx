@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import { ArrowLeft, CheckCircle2 } from 'lucide-react'
 import type { ReactNode } from 'react'
-import type { EnigmaMeta } from '../game/config'
+import { ENIGMAS, type EnigmaMeta } from '../game/config'
 import { useGame } from '../game/GameContext'
 import { AnswerPanel } from './AnswerPanel'
 import { Button } from './ui/button'
@@ -40,7 +40,7 @@ export function EnigmaShell({ enigma, briefing, question, children, aside }: Pro
         </span>
         <div>
           <p className="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.2em] text-neon">
-            Énigme {enigma.id}/6
+            Énigme {enigma.id}/{ENIGMAS.length}
             {solved && (
               <span className="inline-flex items-center gap-1 text-med">
                 <CheckCircle2 className="size-3.5" /> résolue

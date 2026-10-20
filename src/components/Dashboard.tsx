@@ -8,6 +8,7 @@ import { Card } from './ui/card'
 
 export function Dashboard() {
   const { state, open, solvedCount, allSolved } = useGame()
+  const left = ENIGMAS.length - solvedCount
 
   return (
     <motion.section
@@ -27,13 +28,13 @@ export function Dashboard() {
         <div className="text-right">
           <p className="font-mono text-3xl font-bold text-white">
             {solvedCount}
-            <span className="text-slate-500">/6</span>
+            <span className="text-slate-500">/{ENIGMAS.length}</span>
           </p>
           <p className="text-xs text-slate-400">énigmes résolues</p>
         </div>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {ENIGMAS.map((e, i) => {
           const solved = !!state.solved[e.id]
           return (
@@ -87,8 +88,8 @@ export function Dashboard() {
           <h2 className="text-lg font-semibold text-white">Serveur sécurisé · Cadenas final</h2>
           <p className="text-sm text-slate-400">
             {allSolved
-              ? 'Tous les chiffres sont réunis. Saisissez le code dans l’ordre des énigmes (1 → 6).'
-              : `Encore ${6 - solvedCount} chiffre${6 - solvedCount > 1 ? 's' : ''} à trouver avant de pouvoir tenter le code.`}
+              ? `Tous les chiffres sont réunis. Saisissez le code dans l’ordre des énigmes (1 → ${ENIGMAS.length}).`
+              : `Encore ${left} chiffre${left > 1 ? 's' : ''} à trouver avant de pouvoir tenter le code.`}
           </p>
         </div>
         <Button size="lg" disabled={!allSolved} onClick={() => open('lock')}>

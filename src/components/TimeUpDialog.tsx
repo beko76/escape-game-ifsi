@@ -1,11 +1,12 @@
 import { AlarmClockOff } from 'lucide-react'
 import { useEffect } from 'react'
+import { GAME_DURATION_MS } from '../game/config'
 import { useGame } from '../game/GameContext'
 import { sound } from '../lib/sound'
 import { Button } from './ui/button'
 import { Dialog, DialogClose, DialogContent } from './ui/dialog'
 
-/** S'affiche une fois quand les 45 minutes sont écoulées ; la partie peut continuer en temps additionnel. */
+/** S'affiche une fois quand le temps imparti sont écoulées ; la partie peut continuer en temps additionnel. */
 export function TimeUpDialog() {
   const { state, remainingMs, acknowledgeTimeUp } = useGame()
   const show = state.phase === 'playing' && remainingMs <= 0 && !state.timeUpAcknowledged
@@ -18,7 +19,7 @@ export function TimeUpDialog() {
     <Dialog open={show} onOpenChange={(o) => !o && acknowledgeTimeUp()}>
       <DialogContent
         title="Temps écoulé !"
-        description="Les 45 minutes sont passées : la fuite continue de se propager…"
+        description={`Les ${GAME_DURATION_MS / 60000} minutes sont passées : la fuite continue de se propager…`}
         icon={<AlarmClockOff className="mt-0.5 size-6 text-alert" />}
         className="border-alert/50"
       >

@@ -272,7 +272,7 @@ export function TeamBoard({ code }: { code: string }) {
                         </td>
                         <td className="px-4 py-3">
                           <Progress team={t} />
-                          <p className="mt-1 text-xs text-slate-500">{t.solved.length}/6 énigmes</p>
+                          <p className="mt-1 text-xs text-slate-500">{t.solved.length}/{ENIGMAS.length} énigmes</p>
                         </td>
                         <td className="px-4 py-3 text-slate-300">
                           {t.finished_at ? <span className="text-med">Mission accomplie 🎉</span> : viewLabel(t.current_view)}

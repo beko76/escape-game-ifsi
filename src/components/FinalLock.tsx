@@ -88,7 +88,7 @@ export function FinalLock() {
           {success ? <LockOpen className="size-10" /> : <Lock className="size-10" />}
         </motion.div>
         <h1 className="mt-4 text-2xl font-bold text-white sm:text-3xl">Serveur sécurisé</h1>
-        <p className="mt-1 text-sm text-slate-400">Saisissez les 6 chiffres dans l'ordre des énigmes pour stopper la fuite.</p>
+        <p className="mt-1 text-sm text-slate-400">Saisissez les {LENGTH} chiffres dans l'ordre des énigmes pour valider votre habilitation.</p>
       </div>
 
       <motion.div
@@ -98,7 +98,7 @@ export function FinalLock() {
           success ? 'border-med/60 glow-med' : status === 'error' ? 'border-alert/60 glow-alert' : 'border-line',
         )}
       >
-        <div className="flex justify-center gap-1.5 sm:gap-3">
+        <div className="flex justify-center gap-1 sm:gap-2.5">
           {digits.map((d, i) => (
             <div key={i} className="flex flex-col items-center gap-1">
               <button
@@ -117,7 +117,7 @@ export function FinalLock() {
                 onClick={() => setCursor(i)}
                 aria-label={`Position ${i + 1}`}
                 className={cn(
-                  'relative h-16 w-11 cursor-pointer overflow-hidden rounded-xl border-2 bg-black font-mono text-4xl font-bold sm:h-20 sm:w-14 sm:text-5xl',
+                  'relative h-14 w-9 cursor-pointer overflow-hidden rounded-lg border-2 bg-black font-mono text-3xl font-bold sm:h-20 sm:w-14 sm:rounded-xl sm:text-5xl',
                   success ? 'border-med text-med' : status === 'error' ? 'border-alert/70 text-alert' : cursor === i ? 'border-neon text-neon glow-neon' : 'border-line text-slate-200',
                 )}
               >
@@ -193,7 +193,7 @@ export function FinalLock() {
               exit={{ opacity: 0 }}
               className="inline-flex items-center gap-2 rounded-lg border border-alert/50 bg-alert/10 px-4 py-2 font-mono text-sm font-semibold uppercase tracking-wider text-alert"
             >
-              <ShieldX className="size-4" /> Accès refusé · Code incorrect
+              <ShieldX className="size-4" /> Accès refusé · Vérifiez vos analyses juridiques
             </motion.p>
           )}
           {success && (
@@ -203,7 +203,7 @@ export function FinalLock() {
               animate={{ opacity: 1, scale: 1 }}
               className="inline-flex items-center gap-2 rounded-lg border border-med/50 bg-med/10 px-4 py-2 font-mono text-sm font-semibold uppercase tracking-wider text-med"
             >
-              <LockOpen className="size-4" /> Accès autorisé · Fuite stoppée
+              <LockOpen className="size-4" /> Habilitation de sécurité validée
             </motion.p>
           )}
         </AnimatePresence>

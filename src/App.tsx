@@ -7,11 +7,13 @@ import { Header } from './components/Header'
 import { TimeUpDialog } from './components/TimeUpDialog'
 import { Victory } from './components/Victory'
 import { E1Instagram } from './enigmas/E1Instagram'
-import { E2LegalPuzzle } from './enigmas/E2LegalPuzzle'
+import { E2Judicial } from './enigmas/E2Judicial'
 import { E3WhatsApp } from './enigmas/E3WhatsApp'
-import { E4DecisionTree } from './enigmas/E4DecisionTree'
-import { E5Workstation } from './enigmas/E5Workstation'
-import { E6TikTok } from './enigmas/E6TikTok'
+import { E4Derogations } from './enigmas/E4Derogations'
+import { E5DPI } from './enigmas/E5DPI'
+import { E6Tribunal } from './enigmas/E6Tribunal'
+import { E7Crisis } from './enigmas/E7Crisis'
+import { E8Virality } from './enigmas/E8Virality'
 import type { EnigmaId } from './game/config'
 import { GameProvider, useGame } from './game/GameContext'
 
@@ -38,11 +40,13 @@ function useTeacherRoute() {
 
 const ENIGMA_VIEWS: Record<EnigmaId, ComponentType> = {
   1: E1Instagram,
-  2: E2LegalPuzzle,
+  2: E2Judicial,
   3: E3WhatsApp,
-  4: E4DecisionTree,
-  5: E5Workstation,
-  6: E6TikTok,
+  4: E4Derogations,
+  5: E5DPI,
+  6: E6Tribunal,
+  7: E7Crisis,
+  8: E8Virality,
 }
 
 function Game() {

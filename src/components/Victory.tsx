@@ -25,7 +25,7 @@ export function Victory() {
           <Trophy className="size-12" />
         </motion.div>
         <p className="mt-6 font-mono text-xs uppercase tracking-[0.25em] text-med">Mission accomplie</p>
-        <h1 className="mt-2 text-3xl font-black text-white sm:text-4xl">Fuite stoppée, {state.team} !</h1>
+        <h1 className="mt-2 text-3xl font-black text-white sm:text-4xl">Habilitation validée, {state.team} !</h1>
         <p className="mx-auto mt-2 max-w-xl text-slate-400">
           {inTime
             ? 'Vous avez neutralisé la fuite de données dans le temps imparti. La Direction des Soins vous félicite.'

@@ -1,6 +1,15 @@
 // Sons synthétisés via Web Audio : aucun fichier à charger.
 let ctx: AudioContext | null = null
 
+const MUTE_KEY = 'escape-ifsi-muted'
+let muted = (() => {
+  try {
+    return localStorage.getItem(MUTE_KEY) === '1'
+  } catch {
+    return false
+  }
+})()
+
 function audio() {
   try {
     ctx ??= new AudioContext()
@@ -12,6 +21,7 @@ function audio() {
 }
 
 function tone(freq: number, start: number, duration: number, type: OscillatorType = 'sine', volume = 0.15) {
+  if (muted) return
   const a = audio()
   if (!a) return
   const osc = a.createOscillator()
@@ -28,6 +38,15 @@ function tone(freq: number, start: number, duration: number, type: OscillatorTyp
 }
 
 export const sound = {
+  isMuted: () => muted,
+  setMuted: (value: boolean) => {
+    muted = value
+    try {
+      localStorage.setItem(MUTE_KEY, value ? '1' : '0')
+    } catch {
+      /* préférence non mémorisée (navigation privée) */
+    }
+  },
   click: () => tone(880, 0, 0.05, 'square', 0.04),
   success: () => {
     tone(660, 0, 0.15)

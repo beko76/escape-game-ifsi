@@ -1,5 +1,5 @@
-import { KeyRound, ShieldAlert, Timer, Users } from 'lucide-react'
-import { useEffect, useRef } from 'react'
+import { KeyRound, ShieldAlert, Timer, Users, Volume2, VolumeX } from 'lucide-react'
+import { useEffect, useRef, useState } from 'react'
 import { ENIGMAS, WARNING_THRESHOLD_MS } from '../game/config'
 import { useGame } from '../game/GameContext'
 import { sound } from '../lib/sound'
@@ -7,6 +7,26 @@ import { cn, formatDuration } from '../lib/utils'
 import { LegislationSheet } from './LegislationSheet'
 import { TeacherDialog } from './TeacherDialog'
 import { Button } from './ui/button'
+
+function SoundToggle() {
+  const [muted, setMuted] = useState(sound.isMuted)
+  const label = muted ? 'Activer le son' : 'Couper le son'
+  return (
+    <Button
+      variant="ghost"
+      size="icon"
+      aria-label={label}
+      title={label}
+      aria-pressed={muted}
+      onClick={() => {
+        sound.setMuted(!muted)
+        setMuted(!muted)
+      }}
+    >
+      {muted ? <VolumeX /> : <Volume2 />}
+    </Button>
+  )
+}
 
 export function Header() {
   const { state, remainingMs, solvedCount, sync } = useGame()
@@ -54,7 +74,7 @@ export function Header() {
         </div>
 
         <div className="ml-auto flex items-center gap-2 sm:gap-3">
-          <div className="hidden items-center gap-1 sm:flex" aria-label={`${solvedCount} énigmes résolues sur 6`}>
+          <div className="hidden items-center gap-1 sm:flex" aria-label={`${solvedCount} énigmes résolues sur ${ENIGMAS.length}`}>
             {ENIGMAS.map((e) => (
               <span
                 key={e.id}
@@ -85,6 +105,7 @@ export function Header() {
           <span className="md:hidden">
             <LegislationSheet compact />
           </span>
+          <SoundToggle />
           <TeacherDialog
             trigger={
               <Button variant="ghost" size="icon" aria-label="Espace enseignant" title="Espace enseignant">

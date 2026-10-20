@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { AlertTriangle, Hash, KeyRound, Loader2, Lock, Play, Radio, Timer, Users } from 'lucide-react'
 import { useState, type FormEvent } from 'react'
+import { ENIGMAS, GAME_DURATION_MS } from '../game/config'
 import { useGame } from '../game/GameContext'
 import { checkSession, normalizeCode, ONLINE } from '../online/client'
 import { sound } from '../lib/sound'
@@ -54,7 +55,7 @@ export function Briefing() {
         className="text-center text-3xl font-black leading-tight tracking-tight text-white sm:text-5xl"
       >
         <span className="text-alert">ALERTE</span> <span className="text-glow text-neon">CONFIDENTIALITÉ</span>
-        <span className="mt-2 block text-xl font-semibold text-slate-300 sm:text-2xl">Escape Game IFSI</span>
+        <span className="mt-2 block text-xl font-semibold text-slate-300 sm:text-2xl">Escape Game IFSI · Niveau Expert</span>
       </motion.h1>
 
       <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}>
@@ -67,25 +68,27 @@ export function Briefing() {
           <div className="mt-4 space-y-3 text-sm leading-relaxed text-slate-300 sm:text-base">
             <p className="flex gap-2 font-semibold text-white">
               <AlertTriangle className="mt-0.5 size-5 shrink-0 text-warn" />
-              Une fuite de données patients a été détectée cette nuit.
+              Multiples fuites de données patients détectées.
             </p>
             <p>
-              Des informations confidentielles concernant des patients de l'établissement circulent sur les réseaux
-              sociaux. Plusieurs étudiants en stage seraient impliqués. Les familles menacent de porter plainte.
+              Stories, groupes de messagerie, vidéos, publications virales : des informations confidentielles sur des
+              patients de l'établissement circulent sur les réseaux sociaux. Plusieurs étudiants en stage seraient
+              impliqués, des familles ont porté plainte et l'hôpital fait face à une crise en ligne.
             </p>
             <p>
               Votre équipe est missionnée par la cellule de crise. Examinez les{' '}
-              <strong className="text-neon">6 pièces d'investigation</strong>, récupérez un chiffre dans chacune, puis
-              déverrouillez le <strong className="text-neon">serveur sécurisé</strong> pour stopper la fuite.
+              <strong className="text-neon">{ENIGMAS.length} pièces d'investigation</strong>, récupérez un chiffre dans chacune, puis
+              déverrouillez le <strong className="text-neon">serveur sécurisé</strong> pour obtenir votre habilitation de sécurité.
             </p>
           </div>
           <div className="mt-5 grid grid-cols-3 gap-2 text-center text-xs text-slate-400 sm:gap-3">
             <div className="rounded-lg border border-line bg-slate-950/60 p-3">
               <Timer className="mx-auto mb-1 size-5 text-neon" />
-              45 minutes
+              {GAME_DURATION_MS / 60000} minutes
             </div>
             <div className="rounded-lg border border-line bg-slate-950/60 p-3">
-              <KeyRound className="mx-auto mb-1 size-5 text-neon" />6 énigmes
+              <KeyRound className="mx-auto mb-1 size-5 text-neon" />
+              {ENIGMAS.length} énigmes
             </div>
             <div className="rounded-lg border border-line bg-slate-950/60 p-3">
               <Lock className="mx-auto mb-1 size-5 text-neon" />1 cadenas
