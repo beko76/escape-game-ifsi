@@ -8,6 +8,7 @@ import {
   Megaphone,
   MessageCircle,
   Monitor,
+  Music2,
   Network,
   Scale,
   Shield,
@@ -23,7 +24,7 @@ export const WARNING_THRESHOLD_MS = 5 * 60 * 1000
 export const TEACHER_PASSWORD = 'IFSI2026'
 export const STORAGE_KEY = 'escape-ifsi-confidentialite-v2'
 
-export type EnigmaId = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8
+export type EnigmaId = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
 
 export interface EnigmaMeta {
   id: EnigmaId
@@ -141,9 +142,22 @@ export const ENIGMAS: EnigmaMeta[] = [
         "Un profil privé ne le reste pas, un message échappe à son auteur, un prénom changé ne protège personne, et filmer un soignant sans son accord est une faute.",
     },
   },
+  {
+    id: 9,
+    title: 'La Vidéo TikTok',
+    subtitle: 'Le buzz qui fait tache',
+    icon: Music2,
+    answer: '5',
+    hint: "Mettez la vidéo en pause et observez : la tenue, le logo, les panneaux, les numéros, le chariot… et l'image que la vidéo donne de la profession.",
+    debrief: {
+      law: 'Art. R. 4312-4 & R. 4312-6 CSP : dignité et image de la profession',
+      takeaway:
+        "La tenue n'est pas un costume. Logo IFPM, « service de chirurgie », chambre 210 et dossier « Mme DURAND » à l'écran : l'institut, le service et une patiente deviennent identifiables.",
+    },
+  },
 ]
 
-/** Code du cadenas : les chiffres des énigmes, dans l'ordre (73928473). */
+/** Code du cadenas : les chiffres des énigmes, dans l'ordre (739284735). */
 export const FINAL_CODE = ENIGMAS.map((e) => e.answer).join('')
 
 export interface LawArticle {

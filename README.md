@@ -5,7 +5,7 @@ Escape game numérique sur la confidentialité médicale, la législation en san
 ## Déroulé
 
 1. **Briefing** : l'équipe saisit son nom et lance la mission, ce qui démarre un compte à rebours de 60 minutes.
-2. **8 énigmes**, dans l'ordre de son choix. Chacune donne un chiffre :
+2. **9 énigmes**, dans l'ordre de son choix. Chacune donne un chiffre :
 
    | # | Énigme | Chiffre | Calcul attendu |
    |---|--------|---------|----------------|
@@ -17,9 +17,10 @@ Escape game numérique sur la confidentialité médicale, la législation en san
    | 6 | Tribunal administratif | 4 | arguments de défense rejetés |
    | 7 | Crise sur Facebook (photo) | 7 | (6 réactions − 2 bonnes pratiques) + 3 |
    | 8 | Audit de viralité | 3 | (3 VRAI × 3 − 3 FAUX × 1) − 3 |
+   | 9 | Vidéo TikTok (vraie vidéo) | 5 | règles de la Charte transgressées |
 
-3. **Cadenas final** : code `73928473`.
-4. **Débriefing** : temps réalisé, indices utilisés, erreurs, les 8 points de droit et fiche imprimable « Les 5 règles d'or ».
+3. **Cadenas final** : code `739284735`.
+4. **Débriefing** : temps réalisé, indices utilisés, erreurs, les 9 points de droit et fiche imprimable « Les 5 règles d'or ».
 
 La progression et le chrono sont enregistrés dans le navigateur (`localStorage`). Un rafraîchissement de la page ne fait rien perdre. Après 60 minutes, la partie continue en temps additionnel.
 

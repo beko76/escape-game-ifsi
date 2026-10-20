@@ -14,6 +14,7 @@ import { E5DPI } from './enigmas/E5DPI'
 import { E6Tribunal } from './enigmas/E6Tribunal'
 import { E7Crisis } from './enigmas/E7Crisis'
 import { E8Virality } from './enigmas/E8Virality'
+import { E9TikTok } from './enigmas/E9TikTok'
 import type { EnigmaId } from './game/config'
 import { GameProvider, useGame } from './game/GameContext'
 
@@ -47,6 +48,7 @@ const ENIGMA_VIEWS: Record<EnigmaId, ComponentType> = {
   6: E6Tribunal,
   7: E7Crisis,
   8: E8Virality,
+  9: E9TikTok,
 }
 
 function Game() {

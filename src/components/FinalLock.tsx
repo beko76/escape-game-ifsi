@@ -117,7 +117,7 @@ export function FinalLock() {
                 onClick={() => setCursor(i)}
                 aria-label={`Position ${i + 1}`}
                 className={cn(
-                  'relative h-14 w-9 cursor-pointer overflow-hidden rounded-lg border-2 bg-black font-mono text-3xl font-bold sm:h-20 sm:w-14 sm:rounded-xl sm:text-5xl',
+                  'relative h-12 w-8 cursor-pointer overflow-hidden rounded-lg border-2 bg-black font-mono text-2xl font-bold sm:h-20 sm:w-14 sm:rounded-xl sm:text-5xl',
                   success ? 'border-med text-med' : status === 'error' ? 'border-alert/70 text-alert' : cursor === i ? 'border-neon text-neon glow-neon' : 'border-line text-slate-200',
                 )}
               >
