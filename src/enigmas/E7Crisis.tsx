@@ -73,12 +73,12 @@ function FacebookPost() {
         <X className="size-5 text-slate-500" />
       </div>
       <p className="px-3 pb-3 text-sm leading-relaxed">
-        Voilà comment on s'occupe de NOS ENFANTS en pédiatrie 😡😡 Mon fils sonne depuis 20 minutes et elles DORMENT !!!
+        Voilà comment on s'occupe de NOS ENFANTS en pédiatrie 😡😡 Il est 3 h du matin, mon fils sonne depuis 20 minutes et elles DORMENT !!!
         PARTAGEZ un maximum, tout le monde doit savoir 👇
       </p>
       <img
         src={PHOTO}
-        alt="Deux soignantes, la tête posée sur la table, devant le tableau blanc du service de pédiatrie"
+        alt="De nuit, deux soignantes, la tête posée sur la table, devant le tableau blanc du service de pédiatrie"
         className="block w-full"
       />
       <div className="flex items-center justify-between px-3 py-2 text-xs text-slate-500">
@@ -117,7 +117,7 @@ export function E7Crisis() {
   return (
     <EnigmaShell
       enigma={ENIGMAS[6]}
-      briefing="Pendant leur pause dans la salle de repos, deux soignantes du service ont été photographiées à leur insu par un parent. Sa publication a été partagée 2 400 fois dans la nuit. Vous êtes ESI dans ce service. Que faites-vous ?"
+      briefing="Pendant leur pause de nuit dans la salle de repos, deux soignantes du service ont été photographiées à leur insu par un parent. Sa publication a été partagée 2 400 fois dans la nuit. Vous êtes ESI dans ce service. Que faites-vous ?"
       question="Calculez : (nombre de réactions proposées − nombre de bonnes pratiques) + 3."
     >
       <div className="space-y-6">

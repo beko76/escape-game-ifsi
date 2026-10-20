@@ -44,7 +44,7 @@ function StoryMockup() {
           <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 overflow-hidden">
             <motion.img
               src={PHOTO}
-              alt="Deux soignantes rient autour d'un café devant le tableau blanc du service de pédiatrie"
+              alt="De nuit, deux soignantes rient autour d'un café devant le tableau blanc du service de pédiatrie"
               className="block w-full origin-[42%_8%]"
               animate={{ scale: zoom ? 2.6 : 1 }}
               transition={{ type: 'spring', stiffness: 120, damping: 20 }}
@@ -59,7 +59,7 @@ function StoryMockup() {
           </div>
           <div className="absolute inset-x-0 bottom-24 z-20 flex justify-center px-4">
             <p className="rounded-lg bg-black/60 px-3 py-1.5 text-center text-sm font-semibold text-white backdrop-blur-sm">
-              Pause café méritée avec ma tutrice 😂☕ #teampédia
+              Pause café de 3 h du mat' avec ma tutrice 😂☕ #nightshift #teampédia
             </p>
           </div>
 
@@ -92,7 +92,7 @@ export function E1Instagram() {
       enigma={ENIGMAS[0]}
       briefing={
         <>
-          Cette story a été publiée par une étudiante en stage, géolocalisée sur le service. Elle a été vue 418 fois avant
+          Cette story a été publiée en pleine garde de nuit par une étudiante en stage, géolocalisée sur le service. Elle a été vue 418 fois avant
           d'être supprimée, mais des captures circulent déjà. Analysez l'image : qui est exposé ?
         </>
       }
