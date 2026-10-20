@@ -2,8 +2,7 @@ import { Globe, MessageCircle, MoreHorizontal, Share2, ThumbsUp, X } from 'lucid
 import { ChoiceBoard, type ChoiceItem } from '../components/ChoiceBoard'
 import { EnigmaShell } from '../components/EnigmaShell'
 import { ENIGMAS } from '../game/config'
-
-const PHOTO = `${import.meta.env.BASE_URL}images/post-pause-soignantes.jpg`
+import PHOTO from '../assets/images/post-pause-soignantes.jpg'
 
 const COMMENTS = [
   { who: 'Sandrine L.', text: 'Honteux !!! On leur confie nos enfants 🤬' },

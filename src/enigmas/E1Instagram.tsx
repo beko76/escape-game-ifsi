@@ -3,9 +3,8 @@ import { Heart, MapPin, MoreHorizontal, Send, ZoomIn, ZoomOut } from 'lucide-rea
 import { useState } from 'react'
 import { EnigmaShell } from '../components/EnigmaShell'
 import { ENIGMAS } from '../game/config'
+import PHOTO from '../assets/images/story-pause-cafe.jpg'
 import { cn } from '../lib/utils'
-
-const PHOTO = `${import.meta.env.BASE_URL}images/story-pause-cafe.jpg`
 
 function StoryMockup() {
   const [zoom, setZoom] = useState(false)

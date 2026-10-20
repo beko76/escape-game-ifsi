@@ -26,7 +26,7 @@ La progression et le chrono sont enregistrés dans le navigateur (`localStorage`
 
 La **Bibliothèque légale** (en-tête) regroupe les textes utiles et la synthèse du guide MACSF. Le bouton 🔊 coupe ou réactive les sons.
 
-Les photos des énigmes 1 et 7 sont dans [public/images/](public/images/).
+Les photos des énigmes 1 et 7 sont dans [src/assets/images/](src/assets/images/).
 
 ## Espace enseignant
 
