@@ -8,8 +8,15 @@ import { cn } from '../lib/utils'
 import { Button } from './ui/button'
 import { Card } from './ui/card'
 
+/** Textes du panneau de réponse, personnalisables par énigme. */
+export interface AnswerLabels {
+  submit?: string
+  success?: string
+  error?: string
+}
+
 /** Zone « Entrez le chiffre N » commune à toutes les énigmes. */
-export function AnswerPanel({ enigma, question }: { enigma: EnigmaMeta; question: string }) {
+export function AnswerPanel({ enigma, question, labels = {} }: { enigma: EnigmaMeta; question: string; labels?: AnswerLabels }) {
   const { state, solve, addError, takeHint } = useGame()
   const solved = !!state.solved[enigma.id]
   const hintShown = state.hints.includes(enigma.id)
@@ -53,7 +60,7 @@ export function AnswerPanel({ enigma, question }: { enigma: EnigmaMeta; question
           >
             <CheckCircle2 className="size-8 shrink-0 text-med" />
             <div className="flex-1">
-              <p className="text-sm text-emerald-200">Chiffre {enigma.id} récupéré</p>
+              <p className="text-sm text-emerald-200">{labels.success ?? `Chiffre ${enigma.id} récupéré`}</p>
               <p className="text-xs text-emerald-300/70">Notez-le : il servira pour le cadenas final.</p>
             </div>
             <span className="grid size-14 place-items-center rounded-xl bg-slate-950 font-mono text-3xl font-bold text-med glow-med">
@@ -83,7 +90,7 @@ export function AnswerPanel({ enigma, question }: { enigma: EnigmaMeta; question
                 )}
               />
               <Button type="submit" size="lg" className="h-14 flex-1" disabled={!value}>
-                Valider
+                {labels.submit ?? 'Valider'}
               </Button>
             </div>
             <AnimatePresence>
@@ -94,7 +101,7 @@ export function AnswerPanel({ enigma, question }: { enigma: EnigmaMeta; question
                   exit={{ opacity: 0 }}
                   className="mt-3 flex items-center gap-2 text-sm text-alert"
                 >
-                  <XCircle className="size-4" /> Mauvaise réponse. Réexaminez les indices.
+                  <XCircle className="size-4 shrink-0" /> {labels.error ?? 'Mauvaise réponse. Réexaminez les indices.'}
                 </motion.p>
               )}
             </AnimatePresence>

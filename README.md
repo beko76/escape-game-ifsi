@@ -12,7 +12,7 @@ Escape game numérique sur la confidentialité médicale, la législation en san
    | 1 | Story Instagram (photo) | 7 | prescription d'un délit 6 + patients exposés 4 − prison Art. 226-13 1 − soignantes photographiées 2 |
    | 2 | Matrice judiciaire | 3 | qualifications relevant de l'ordre judiciaire (Art. 9 C. civ., 226-13 CP, 226-1 CP) |
    | 3 | Secret partagé (WhatsApp) | 9 | chambre 312 → 3+1+2 = 6 + 3 destinataires non habilités |
-   | 4 | Dérogations légales | 2 | situations relevant de l'Art. 226-14 CP |
+   | 4 | Arbre de décision éthique | 2 | (3 bonnes pratiques × 2) − 4 |
    | 5 | Session du tuteur (DPI) | 8 | 3 affirmations exactes × 2 + 2 |
    | 6 | Tribunal administratif | 4 | arguments de défense rejetés |
    | 7 | Crise sur Facebook (photo) | 7 | (6 réactions − 2 bonnes pratiques) + 3 |

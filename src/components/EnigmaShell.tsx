@@ -3,7 +3,7 @@ import { ArrowLeft, CheckCircle2 } from 'lucide-react'
 import type { ReactNode } from 'react'
 import { ENIGMAS, type EnigmaMeta } from '../game/config'
 import { useGame } from '../game/GameContext'
-import { AnswerPanel } from './AnswerPanel'
+import { AnswerPanel, type AnswerLabels } from './AnswerPanel'
 import { Button } from './ui/button'
 
 interface Props {
@@ -15,9 +15,11 @@ interface Props {
   children: ReactNode
   /** Contenu pédagogique optionnel sous la réponse */
   aside?: ReactNode
+  /** Textes personnalisés du panneau de réponse */
+  labels?: AnswerLabels
 }
 
-export function EnigmaShell({ enigma, briefing, question, children, aside }: Props) {
+export function EnigmaShell({ enigma, briefing, question, children, aside, labels }: Props) {
   const { state, open } = useGame()
   const solved = !!state.solved[enigma.id]
   const Icon = enigma.icon
@@ -55,7 +57,7 @@ export function EnigmaShell({ enigma, briefing, question, children, aside }: Pro
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_23.75rem]">
         <div className="min-w-0">{children}</div>
         <div className="space-y-4 lg:sticky lg:top-24 lg:self-start">
-          <AnswerPanel enigma={enigma} question={question} />
+          <AnswerPanel enigma={enigma} question={question} labels={labels} />
           {aside}
         </div>
       </div>

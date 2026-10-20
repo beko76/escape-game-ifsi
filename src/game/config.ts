@@ -79,15 +79,15 @@ export const ENIGMAS: EnigmaMeta[] = [
   },
   {
     id: 4,
-    title: 'Le Labyrinthe des Dérogations',
-    subtitle: 'Quand la loi permet-elle de lever le secret ?',
+    title: "L'Arbre de Décision Éthique",
+    subtitle: 'Empathie, sollicitations et posture soignante',
     icon: Signpost,
     answer: '2',
-    hint: "Seul l'Art. 226-14 du Code pénal autorise la levée du secret : maltraitance d'un mineur, violences conjugales mettant la vie en danger… La demande de la famille n'en fait pas partie.",
+    hint: "Une bonne pratique protège à la fois le patient et la relation de soin : garder la distance professionnelle, ne jamais poser de diagnostic à distance, alerter plutôt que se taire.",
     debrief: {
-      law: 'Art. 226-14 CP : les dérogations légales au secret',
+      law: 'Code de déontologie des infirmiers (CSP, art. R. 4312-1 et suivants)',
       takeaway:
-        "Lever le secret est une exception prévue par la loi : protéger un enfant maltraité, une victime en danger immédiat. Adultère, refus de soins, inquiétude des proches : le secret demeure.",
+        "Pas de patient en « ami », pas de diagnostic par SMS, pas de dossier sur son téléphone. On réoriente vers le médecin ou le 15, et on signale tout risque de fuite à l'encadrement.",
     },
   },
   {

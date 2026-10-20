@@ -9,7 +9,7 @@ import { Victory } from './components/Victory'
 import { E1Instagram } from './enigmas/E1Instagram'
 import { E2Judicial } from './enigmas/E2Judicial'
 import { E3WhatsApp } from './enigmas/E3WhatsApp'
-import { E4Derogations } from './enigmas/E4Derogations'
+import { E4Ethics } from './enigmas/E4Ethics'
 import { E5DPI } from './enigmas/E5DPI'
 import { E6Tribunal } from './enigmas/E6Tribunal'
 import { E7Crisis } from './enigmas/E7Crisis'
@@ -43,7 +43,7 @@ const ENIGMA_VIEWS: Record<EnigmaId, ComponentType> = {
   1: E1Instagram,
   2: E2Judicial,
   3: E3WhatsApp,
-  4: E4Derogations,
+  4: E4Ethics,
   5: E5DPI,
   6: E6Tribunal,
   7: E7Crisis,
