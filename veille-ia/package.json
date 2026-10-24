@@ -1,0 +1,23 @@
+{
+  "name": "veille-ia",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "description": "Agent de veille quotidienne sur l'IA : collecte, recherche web et résumé en français",
+  "engines": {
+    "node": ">=22.18"
+  },
+  "scripts": {
+    "start": "node src/index.ts",
+    "collecte": "node src/index.ts --collecte-seule",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^1.3.0",
+    "fast-xml-parser": "^5.11.2"
+  },
+  "devDependencies": {
+    "@types/node": "^24.19.2",
+    "typescript": "~6.0.2"
+  }
+}
