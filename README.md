@@ -99,7 +99,3 @@ src/
 public/
   videos/tiktok-esi.mp4   vidéo de l'énigme 6 (remplaçable par un autre fichier du même nom)
 ```
-
-## Veille IA quotidienne
-
-Le dossier [veille-ia/](veille-ia/) contient un projet indépendant du jeu : un agent qui résume chaque matin les nouveautés de l'IA. Son fonctionnement et sa mise en route sont décrits dans [veille-ia/README.md](veille-ia/README.md).
