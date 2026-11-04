@@ -6,7 +6,7 @@ import { ENIGMAS, GAME_DURATION_MS } from '../game/config'
 import { supabase, TABLES, type TeamRow } from '../online/client'
 import { cn, formatDuration } from '../lib/utils'
 
-/** Au-delà, une équipe sans « battement de cœur » est signalée comme déconnectée. */
+/** Au-delà, un joueur sans « battement de cœur » est signalé comme déconnecté. */
 const STALE_MS = 90_000
 
 type Status = 'done' | 'overtime' | 'stale' | 'playing'
@@ -15,7 +15,7 @@ const STATUS_UI: Record<Status, { label: string; cls: string }> = {
   done: { label: 'Terminé', cls: 'border-med/50 bg-med/10 text-med' },
   playing: { label: 'En cours', cls: 'border-neon/40 bg-neon/10 text-neon' },
   overtime: { label: 'Temps dépassé', cls: 'border-alert/50 bg-alert/10 text-alert' },
-  stale: { label: 'Déconnectée ?', cls: 'border-warn/50 bg-warn/10 text-warn' },
+  stale: { label: 'Déconnecté ?', cls: 'border-warn/50 bg-warn/10 text-warn' },
 }
 
 function statusOf(t: TeamRow, now: number): Status {
@@ -31,7 +31,7 @@ function elapsedOf(t: TeamRow, now: number) {
   return end - Date.parse(t.started_at)
 }
 
-/** Classement : équipes terminées par temps, puis les autres par avancement. */
+/** Classement : joueurs ayant terminé, par temps, puis les autres par avancement. */
 function rank(teams: TeamRow[], now: number) {
   return [...teams].sort((a, b) => {
     if (!!a.finished_at !== !!b.finished_at) return a.finished_at ? -1 : 1
@@ -105,7 +105,7 @@ export function TeamBoard({ code }: { code: string }) {
 
   useEffect(() => {
     void fetchTeams()
-    // Temps réel : chaque changement d'une équipe de la séance est appliqué immédiatement
+    // Temps réel : chaque changement d'un joueur de la séance est appliqué immédiatement
     const channel = supabase!
       .channel(`${TABLES.teams}-${code}`)
       .on('postgres_changes', { event: '*', schema: 'public', table: TABLES.teams }, (payload) => {
@@ -138,7 +138,7 @@ export function TeamBoard({ code }: { code: string }) {
   const ranked = useMemo(() => rank(teams ?? [], now), [teams, now])
 
   const remove = async (t: TeamRow) => {
-    if (!confirm(`Retirer l'équipe « ${t.team} » du tableau de bord ?`)) return
+    if (!confirm(`Retirer le joueur « ${t.team} » du tableau de bord ?`)) return
     setTeams((ts) => ts?.filter((x) => x.id !== t.id) ?? ts)
     await supabase!.from(TABLES.teams).delete().eq('id', t.id)
   }
@@ -146,14 +146,14 @@ export function TeamBoard({ code }: { code: string }) {
   const finished = ranked.filter((t) => t.finished_at)
   const best = finished[0]
   const stats = [
-    { label: 'Équipes', value: ranked.length, icon: Users, cls: 'text-neon' },
+    { label: 'Joueurs', value: ranked.length, icon: Users, cls: 'text-neon' },
     {
       label: 'En cours',
       value: ranked.filter((t) => !t.finished_at).length,
       icon: Radio,
       cls: 'text-neon',
     },
-    { label: 'Terminées', value: finished.length, icon: CheckCircle2, cls: 'text-med' },
+    { label: 'Terminés', value: finished.length, icon: CheckCircle2, cls: 'text-med' },
     {
       label: 'Meilleur temps',
       value: best ? formatDuration(elapsedOf(best, now)) : '—',
@@ -178,7 +178,7 @@ export function TeamBoard({ code }: { code: string }) {
 
       <Card className="overflow-hidden">
         <div className="flex items-center justify-between gap-3 border-b border-line px-5 py-3">
-          <h2 className="font-semibold text-white">Équipes en direct</h2>
+          <h2 className="font-semibold text-white">Joueurs en direct</h2>
           <span
             className={cn(
               'inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 font-mono text-xs',
@@ -205,9 +205,9 @@ export function TeamBoard({ code }: { code: string }) {
         ) : ranked.length === 0 ? (
           <div className="p-10 text-center">
             <Users className="mx-auto size-10 text-slate-600" />
-            <p className="mt-3 font-medium text-slate-300">En attente des équipes…</p>
+            <p className="mt-3 font-medium text-slate-300">En attente des joueurs…</p>
             <p className="mt-1 text-sm text-slate-500">
-              Elles apparaîtront ici dès qu'elles auront lancé la mission avec le code de séance.
+              Ils apparaîtront ici dès qu'ils auront lancé la mission avec le code de séance.
             </p>
           </div>
         ) : (
@@ -216,7 +216,7 @@ export function TeamBoard({ code }: { code: string }) {
               <thead className="border-b border-line font-mono text-[0.6875rem] uppercase tracking-wider text-slate-500">
                 <tr>
                   <th className="px-4 py-3 font-medium">#</th>
-                  <th className="px-4 py-3 font-medium">Équipe</th>
+                  <th className="px-4 py-3 font-medium">Joueur</th>
                   <th className="px-4 py-3 font-medium">Progression</th>
                   <th className="px-4 py-3 font-medium">Où en est-elle ?</th>
                   <th className="px-4 py-3 font-medium">Chrono</th>
@@ -300,8 +300,8 @@ export function TeamBoard({ code }: { code: string }) {
                           <button
                             type="button"
                             onClick={() => remove(t)}
-                            aria-label={`Retirer l'équipe ${t.team}`}
-                            title="Retirer l'équipe"
+                            aria-label={`Retirer le joueur ${t.team}`}
+                            title="Retirer le joueur"
                             className="cursor-pointer rounded-md p-2 text-slate-600 hover:bg-alert/10 hover:text-alert"
                           >
                             <Trash2 className="size-4" />

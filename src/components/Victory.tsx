@@ -78,7 +78,7 @@ export function Victory() {
         <TeacherDialog
           trigger={
             <Button variant="ghost" size="lg">
-              <RotateCcw /> Réinitialiser pour une autre équipe
+              <RotateCcw /> Réinitialiser pour un autre joueur
             </Button>
           }
         />

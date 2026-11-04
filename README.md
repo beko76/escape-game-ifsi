@@ -4,7 +4,7 @@ Escape game numérique sur la confidentialité médicale, la législation en san
 
 ## Déroulé
 
-1. **Briefing** : l'équipe saisit son nom et lance la mission, ce qui démarre un compte à rebours de 45 minutes.
+1. **Briefing** : le joueur saisit son nom et lance la mission, ce qui démarre un compte à rebours de 45 minutes.
 2. **9 énigmes**, dans l'ordre de son choix. Chacune donne un chiffre :
 
    | # | Énigme | Chiffre | Calcul attendu |
@@ -30,7 +30,7 @@ Les photos des énigmes 1 et 7 sont dans [src/assets/images/](src/assets/images/
 
 ## Espace enseignant
 
-Cliquez sur l'icône 🔑 dans l'en-tête, ou sur « Espace enseignant » en bas de l'accueil, pour réinitialiser la partie pour une nouvelle équipe.
+Cliquez sur l'icône 🔑 dans l'en-tête, ou sur « Espace enseignant » en bas de l'accueil, pour réinitialiser la partie pour un nouveau joueur.
 
 - Mot de passe par défaut : `IFSI2026` (majuscules et minuscules indifférentes).
 - Pour le modifier, changez `TEACHER_PASSWORD` dans [src/game/config.ts](src/game/config.ts).
@@ -42,14 +42,14 @@ La durée, les réponses (le code final en découle) et tous les textes pédagog
 Adresse : `…/#/prof`. On y accède aussi par l'icône 🔑, puis « Ouvrir le tableau de bord enseignant ». Il est protégé par le mot de passe enseignant.
 
 1. Créez une **séance**. Un code (ex. `3F23S`), un lien et un QR code s'affichent, à projeter.
-2. Les équipes scannent le QR code, ou saisissent le code avec leur nom d'équipe sur l'écran d'accueil.
+2. Les joueurs scannent le QR code, ou saisissent le code avec leur nom sur l'écran d'accueil.
 3. Le tableau se met à jour en temps réel :
    - énigmes résolues et énigme en cours ;
    - chrono et temps restant ;
    - indices et erreurs ;
-   - dernière activité, et équipes « déconnectées ? » après 90 s sans signal ;
-   - classement (équipes terminées par temps, puis par avancement).
-4. Le bouton plein écran sert à projeter le classement. Le bouton 🗑 retire une équipe du tableau.
+   - dernière activité, et joueurs « déconnectés ? » après 90 s sans signal ;
+   - classement (joueurs ayant terminé, par temps, puis par avancement).
+4. Le bouton plein écran sert à projeter le classement. Le bouton 🗑 retire un joueur du tableau.
 
 Sans code de séance, la partie fonctionne normalement mais n'apparaît pas au tableau de bord.
 
@@ -71,7 +71,7 @@ Le suivi utilise [Supabase](https://supabase.com), avec l'offre gratuite.
 
 Sans ces variables, l'application fonctionne entièrement hors ligne, sans suivi.
 
-**Données stockées :** noms d'équipe et progression de jeu uniquement, sans aucune donnée personnelle. Toute personne disposant de l'application peut techniquement lire ou modifier ces données, ce qui est acceptable pour un jeu pédagogique.
+**Données stockées :** prénom ou pseudo du joueur et progression de jeu uniquement. Demandez aux étudiants de ne pas saisir leur nom complet. Toute personne disposant de l'application peut techniquement lire ou modifier ces données, ce qui est acceptable pour un jeu pédagogique.
 
 **Développement local :** `npx supabase start` lance une base locale (Docker requis) sur le port 55321. Mettez ses URL et clé dans `.env.development.local` (utilisé par `npm run dev` seulement).
 

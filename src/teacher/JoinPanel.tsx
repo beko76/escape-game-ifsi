@@ -5,7 +5,7 @@ import { Button } from '../components/ui/button'
 import { Card } from '../components/ui/card'
 import { joinLink } from '../online/client'
 
-/** Code, lien et QR code à projeter pour que les équipes rejoignent la séance. */
+/** Code, lien et QR code à projeter pour que les joueurs rejoignent la séance. */
 export function JoinPanel({ code, label }: { code: string; label: string | null }) {
   const link = joinLink(code)
   const [qr, setQr] = useState<string | null>(null)
@@ -38,7 +38,7 @@ export function JoinPanel({ code, label }: { code: string; label: string | null 
         <p className="font-mono text-xs uppercase tracking-[0.2em] text-slate-400">{label ?? 'Code de séance'}</p>
         <p className="mt-1 font-mono text-5xl font-black tracking-[0.25em] text-neon text-glow">{code}</p>
         <p className="mt-2 text-sm text-slate-400">
-          Les équipes scannent le QR code, ou ouvrent le jeu et saisissent ce code avec leur nom d'équipe.
+          Les joueurs scannent le QR code, ou ouvrent le jeu et saisissent ce code avec leur nom.
         </p>
         <div className="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center">
           <code className="min-w-0 truncate rounded-md border border-line bg-slate-950 px-3 py-2 text-xs text-slate-300 select-all">

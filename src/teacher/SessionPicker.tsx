@@ -29,10 +29,10 @@ export function SessionPicker({ onOpen }: { onOpen: (code: string) => void }) {
 
   const remove = async (session: SessionRow) => {
     const name = session.label ? `« ${session.label} » (${session.code})` : session.code
-    if (!confirm(`Supprimer définitivement la séance ${name} et toutes ses équipes ?`)) return
+    if (!confirm(`Supprimer définitivement la séance ${name} et tous ses joueurs ?`)) return
     setListError(null)
     setDeleting(session.code)
-    // Les équipes de la séance sont supprimées en cascade par la base
+    // Les joueurs de la séance sont supprimés en cascade par la base
     const { error } = await supabase!.from(TABLES.sessions).delete().eq('code', session.code)
     setDeleting(null)
     if (error) setListError('La suppression a échoué. Vérifiez la connexion et réessayez.')
@@ -63,7 +63,7 @@ export function SessionPicker({ onOpen }: { onOpen: (code: string) => void }) {
       <Card className="p-6">
         <h2 className="text-lg font-semibold text-white">Nouvelle séance</h2>
         <p className="mt-1 text-sm text-slate-400">
-          Un code est généré : les équipes le saisissent (ou scannent le QR code) pour apparaître ici en direct.
+          Un code est généré : les joueurs le saisissent (ou scannent le QR code) pour apparaître ici en direct.
         </p>
         <form onSubmit={create} className="mt-5 space-y-3">
           <label className="block text-sm text-slate-300">
@@ -117,7 +117,7 @@ export function SessionPicker({ onOpen }: { onOpen: (code: string) => void }) {
                   onClick={() => remove(s)}
                   disabled={deleting !== null}
                   aria-label={`Supprimer la séance ${s.code}`}
-                  title="Supprimer la séance et ses équipes"
+                  title="Supprimer la séance et ses joueurs"
                   className="grid size-11 shrink-0 cursor-pointer place-items-center rounded-lg border border-transparent text-slate-500 transition-colors hover:border-alert/40 hover:bg-alert/10 hover:text-alert disabled:cursor-wait disabled:opacity-60"
                 >
                   {deleting === s.code ? <Loader2 className="size-4 animate-spin" /> : <Trash2 className="size-4" />}

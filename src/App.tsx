@@ -18,7 +18,7 @@ import { E9TikTok } from './enigmas/E9TikTok'
 import type { EnigmaId } from './game/config'
 import { GameProvider, useGame } from './game/GameContext'
 
-// Chargé à la demande : les équipes ne téléchargent pas le code du tableau de bord
+// Chargé à la demande : les joueurs ne téléchargent pas le code du tableau de bord
 const TeacherDashboard = lazy(() => import('./teacher/TeacherDashboard').then((m) => ({ default: m.TeacherDashboard })))
 
 /** Route du tableau de bord enseignant : #/prof ou #/prof/CODE */

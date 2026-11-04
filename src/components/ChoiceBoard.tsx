@@ -30,7 +30,7 @@ const TONE = {
 
 /**
  * Liste de cartes à classer entre deux choix (vrai/faux, retenu/rejeté…).
- * Les choix de l'équipe servent d'outil de réflexion : rien n'est corrigé avant que
+ * Les choix du joueur servent d'outil de réflexion : rien n'est corrigé avant que
  * l'énigme soit résolue, ce qui obligerait sinon à donner la réponse.
  */
 export function ChoiceBoard({

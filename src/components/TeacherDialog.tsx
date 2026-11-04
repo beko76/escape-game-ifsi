@@ -39,7 +39,7 @@ export function TeacherDialog({ trigger }: { trigger: ReactNode }) {
       <DialogTrigger asChild>{trigger}</DialogTrigger>
       <DialogContent
         title="Espace enseignant"
-        description="Réinitialiser la partie pour une nouvelle équipe. La progression actuelle sera effacée."
+        description="Réinitialiser la partie pour un nouveau joueur. La progression actuelle sera effacée."
         icon={<KeyRound className="mt-0.5 size-6 text-warn" />}
       >
         <motion.form animate={controls} onSubmit={submit} className="space-y-4">
@@ -58,11 +58,11 @@ export function TeacherDialog({ trigger }: { trigger: ReactNode }) {
           </label>
           {error && <p className="text-sm text-alert">Mot de passe incorrect.</p>}
           <Button type="submit" variant="danger" className="w-full">
-            <RotateCcw /> Réinitialiser pour une autre équipe
+            <RotateCcw /> Réinitialiser pour un autre joueur
           </Button>
         </motion.form>
         <div className="mt-5 border-t border-line pt-5">
-          <p className="text-sm text-slate-400">Suivre toutes les équipes en direct pendant la séance :</p>
+          <p className="text-sm text-slate-400">Suivre tous les joueurs en direct pendant la séance :</p>
           <a
             href="#/prof"
             onClick={() => setOpen(false)}

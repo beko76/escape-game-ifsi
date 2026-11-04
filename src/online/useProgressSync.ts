@@ -27,8 +27,8 @@ function toRow(s: GameState): Omit<TeamRow, 'updated_at'> | null {
 }
 
 /**
- * Envoie la progression de l'équipe au tableau de bord enseignant.
- * Un « battement de cœur » toutes les 30 s permet à l'enseignant de repérer les équipes déconnectées.
+ * Envoie la progression du joueur au tableau de bord enseignant.
+ * Un « battement de cœur » toutes les 30 s permet à l'enseignant de repérer les joueurs déconnectés.
  */
 export function useProgressSync(state: GameState): SyncStatus {
   const row = useMemo(() => toRow(state), [state])

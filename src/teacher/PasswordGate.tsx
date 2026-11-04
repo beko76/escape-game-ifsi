@@ -47,7 +47,7 @@ export function PasswordGate({ children }: { children: ReactNode }) {
             <KeyRound className="size-6" />
           </span>
           <h1 className="mt-4 text-xl font-bold text-white">Tableau de bord enseignant</h1>
-          <p className="mt-1 text-sm text-slate-400">Suivi en direct des équipes de l'escape game.</p>
+          <p className="mt-1 text-sm text-slate-400">Suivi en direct des joueurs de l'escape game.</p>
           <form onSubmit={submit} className="mt-5 space-y-3">
             <label className="block text-sm text-slate-300">
               Mot de passe enseignant

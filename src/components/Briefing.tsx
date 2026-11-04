@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { AlertTriangle, Hash, KeyRound, Loader2, Lock, Play, Radio, Timer, Users } from 'lucide-react'
+import { AlertTriangle, Hash, KeyRound, Loader2, Lock, Play, Radio, Timer, User } from 'lucide-react'
 import { useState, type FormEvent } from 'react'
 import { ENIGMAS, GAME_DURATION_MS } from '../game/config'
 import { useGame } from '../game/GameContext'
@@ -76,7 +76,7 @@ export function Briefing() {
               impliqués, des familles ont porté plainte et l'hôpital fait face à une crise en ligne.
             </p>
             <p>
-              Votre équipe est missionnée par la cellule de crise. Examinez les{' '}
+              La cellule de crise vous confie la mission. Examinez les{' '}
               <strong className="text-neon">{ENIGMAS.length} pièces d'investigation</strong>, récupérez un chiffre dans chacune, puis
               déverrouillez le <strong className="text-neon">serveur sécurisé</strong> pour obtenir votre habilitation de sécurité.
             </p>
@@ -106,12 +106,12 @@ export function Briefing() {
       >
         <div className={ONLINE ? 'grid gap-3 sm:grid-cols-[minmax(0,1fr)_11rem_auto]' : 'grid gap-3 sm:grid-cols-[minmax(0,1fr)_auto]'}>
           <label className="relative">
-            <span className="sr-only">Nom de l'équipe</span>
-            <Users className="pointer-events-none absolute left-4 top-1/2 size-5 -translate-y-1/2 text-slate-500" />
+            <span className="sr-only">Nom du joueur</span>
+            <User className="pointer-events-none absolute left-4 top-1/2 size-5 -translate-y-1/2 text-slate-500" />
             <input
               value={team}
               onChange={(e) => setTeam(e.target.value.slice(0, 30))}
-              placeholder="Nom de l'équipe (ex : Groupe A3)"
+              placeholder="Votre prénom ou pseudo"
               className="h-14 w-full rounded-xl border border-line bg-panel pl-12 pr-4 text-base text-white outline-none transition-colors placeholder:text-slate-500 focus:border-neon focus:glow-neon"
             />
           </label>
