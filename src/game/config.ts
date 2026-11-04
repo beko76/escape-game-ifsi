@@ -18,7 +18,7 @@ import {
   Video,
 } from 'lucide-react'
 
-export const GAME_DURATION_MS = 60 * 60 * 1000
+export const GAME_DURATION_MS = 45 * 60 * 1000
 export const WARNING_THRESHOLD_MS = 5 * 60 * 1000
 /** Mot de passe de l'espace enseignant (réinitialisation). À changer ici si besoin. */
 export const TEACHER_PASSWORD = 'IFSI2026'

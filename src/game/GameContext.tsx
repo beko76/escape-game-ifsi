@@ -38,9 +38,19 @@ const INITIAL: GameState = {
   timeUpAcknowledged: false,
 }
 
+/**
+ * La partie est rangée dans sessionStorage : elle survit à un rafraîchissement,
+ * mais fermer l'onglet la clôture et la page suivante repart de l'accueil.
+ */
 function load(): GameState {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY)
+    // Ancien stockage persistant (localStorage), qui gardait la partie après fermeture
+    localStorage.removeItem(STORAGE_KEY)
+  } catch {
+    /* ignore */
+  }
+  try {
+    const raw = sessionStorage.getItem(STORAGE_KEY)
     if (!raw) return INITIAL
     return { ...INITIAL, ...(JSON.parse(raw) as Partial<GameState>) }
   } catch {
@@ -75,20 +85,11 @@ export function GameProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state))
+      sessionStorage.setItem(STORAGE_KEY, JSON.stringify(state))
     } catch {
       /* stockage indisponible (navigation privée) : le jeu reste jouable */
     }
   }, [state])
-
-  // Synchronise plusieurs onglets ouverts sur le même poste
-  useEffect(() => {
-    const onStorage = (e: StorageEvent) => {
-      if (e.key === STORAGE_KEY) setState(load())
-    }
-    window.addEventListener('storage', onStorage)
-    return () => window.removeEventListener('storage', onStorage)
-  }, [])
 
   useEffect(() => {
     if (state.phase !== 'playing') return
@@ -133,7 +134,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
       acknowledgeTimeUp: () => update((s) => ({ ...s, timeUpAcknowledged: true })),
       reset: () => {
         try {
-          localStorage.removeItem(STORAGE_KEY)
+          sessionStorage.removeItem(STORAGE_KEY)
         } catch {
           /* ignore */
         }

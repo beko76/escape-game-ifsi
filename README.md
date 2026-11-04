@@ -4,7 +4,7 @@ Escape game numérique sur la confidentialité médicale, la législation en san
 
 ## Déroulé
 
-1. **Briefing** : l'équipe saisit son nom et lance la mission, ce qui démarre un compte à rebours de 60 minutes.
+1. **Briefing** : l'équipe saisit son nom et lance la mission, ce qui démarre un compte à rebours de 45 minutes.
 2. **9 énigmes**, dans l'ordre de son choix. Chacune donne un chiffre :
 
    | # | Énigme | Chiffre | Calcul attendu |
@@ -22,7 +22,7 @@ Escape game numérique sur la confidentialité médicale, la législation en san
 3. **Cadenas final** : code `739287735`.
 4. **Débriefing** : temps réalisé, indices utilisés, erreurs, les 9 points de droit et fiche imprimable « Les 5 règles d'or ».
 
-La progression et le chrono sont enregistrés dans le navigateur (`localStorage`). Un rafraîchissement de la page ne fait rien perdre. Après 60 minutes, la partie continue en temps additionnel.
+La progression et le chrono sont enregistrés dans l'onglet (`sessionStorage`). Un rafraîchissement de la page ne fait rien perdre, mais fermer l'onglet clôture la partie : à la réouverture, le jeu repart de l'accueil. Après 45 minutes, la partie continue en temps additionnel.
 
 La **Bibliothèque légale** (en-tête) regroupe les textes utiles et la synthèse du guide MACSF. Le bouton 🔊 coupe ou réactive les sons.
 
@@ -89,7 +89,7 @@ Stack : React 19, TypeScript, Vite, Tailwind CSS v4, composants façon shadcn/ui
 
 ```
 src/
-  game/        config.ts (énigmes, lois, réponses, mot de passe) · GameContext.tsx (état + localStorage)
+  game/        config.ts (énigmes, lois, réponses, mot de passe) · GameContext.tsx (état + sessionStorage)
   components/  Briefing, Header, Dashboard, EnigmaShell, AnswerPanel, FinalLock, Victory, ...
   components/ui/  Button, Card, Dialog
   enigmas/     E1Instagram … E6TikTok
