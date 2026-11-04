@@ -93,14 +93,14 @@ export const ENIGMAS: EnigmaMeta[] = [
   {
     id: 5,
     title: 'La Session du Tuteur',
-    subtitle: 'Cybersécurité & dossier patient informatisé',
+    subtitle: 'Audit de sécurité informatique en EHPAD',
     icon: Monitor,
     answer: '8',
-    hint: "Identifiants et carte CPS sont personnels, chaque connexion est tracée, et un ESI n'ouvre que les dossiers des patients qu'il prend en charge.",
+    hint: "Session verrouillée, CPS retirée, mot de passe secret, écran hors de vue, aucune clé perso. Et quand un compte est prêté, qui est responsable : la tutrice, l'étudiant… et l'établissement ?",
     debrief: {
-      law: 'Art. L. 1110-4 CSP & politique de sécurité des SI de santé',
+      law: 'Art. L. 1110-4 CSP, RGPD & politique de sécurité des SI de santé',
       takeaway:
-        "Une session = une personne. On ne prête ni mot de passe ni CPS, on ne consulte que les dossiers de ses patients. Tout est tracé : la curiosité est une faute.",
+        "Une session = une personne. On verrouille son poste, on retire sa CPS, on ne note ni ne prête son mot de passe, aucune donnée sur clé perso. Prêter son compte engage la tutrice comme l'étudiant ; l'établissement doit créer des comptes individuels.",
     },
   },
   {
@@ -108,12 +108,12 @@ export const ENIGMAS: EnigmaMeta[] = [
     title: 'Le Tribunal Administratif',
     subtitle: 'Un ESI exclu conteste sa sanction',
     icon: Gavel,
-    answer: '4',
-    hint: "Relisez la synthèse du guide MACSF : compte « privé », absence de nom, « mes propos n'engagent que moi »… Et le secret s'applique-t-il aux étudiants ?",
+    answer: '7',
+    hint: "Hors temps de stage, compte « privé », liberté d'expression, prénoms seulement, aucun préjudice financier : lequel de ces arguments résiste à la jurisprudence ? Un seul relève d'une obligation de l'IFSI.",
     debrief: {
       law: 'Exclusion d’un ESI : décision administrative contrôlée par le tribunal administratif',
       takeaway:
-        "Compte privé, aucun nom cité, avertissement en bio, statut d'étudiant : aucune de ces excuses ne tient. Le secret s'impose dès le premier jour de stage.",
+        "Week-end, compte privé, liberté d'expression, simples prénoms, absence de préjudice financier : aucune de ces excuses ne tient face à des propos diffamants. Seul le défaut d'information sur les chartes peut être discuté.",
     },
   },
   {
@@ -157,7 +157,7 @@ export const ENIGMAS: EnigmaMeta[] = [
   },
 ]
 
-/** Code du cadenas : les chiffres des énigmes, dans l'ordre (739284735). */
+/** Code du cadenas : les chiffres des énigmes, dans l'ordre (739287735). */
 export const FINAL_CODE = ENIGMAS.map((e) => e.answer).join('')
 
 export interface LawArticle {
@@ -258,7 +258,9 @@ export const LAWS: LawArticle[] = [
       'Identifiants, mots de passe et carte CPS sont strictement personnels : ils ne se prêtent jamais, même à la demande d’un tuteur.',
       'Tout acte réalisé sous une session est attribué à son titulaire, qui en porte la responsabilité.',
       'Chaque accès au dossier patient informatisé est tracé (qui, quel dossier, quand) et peut être contrôlé.',
-      'On ne consulte que les dossiers des patients que l’on prend en charge. On verrouille sa session dès qu’on s’éloigne.',
+      'On ne consulte que les dossiers des patients que l’on prend en charge. On verrouille sa session et on retire sa CPS dès qu’on s’éloigne.',
+      'Pas de mot de passe noté sur un Post-it, pas de clé USB personnelle, un écran orienté hors de la vue des visiteurs et des résidents.',
+      'L’établissement doit créer des comptes individuels pour chaque utilisateur, stagiaires compris : à défaut, sa responsabilité est engagée.',
     ],
   },
   {

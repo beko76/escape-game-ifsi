@@ -13,13 +13,13 @@ Escape game numérique sur la confidentialité médicale, la législation en san
    | 2 | Matrice judiciaire | 3 | qualifications relevant de l'ordre judiciaire (Art. 9 C. civ., 226-13 CP, 226-1 CP) |
    | 3 | Secret partagé (WhatsApp) | 9 | chambre 312 → 3+1+2 = 6 + 3 destinataires non habilités |
    | 4 | Arbre de décision éthique | 2 | (3 bonnes pratiques × 2) − 4 |
-   | 5 | Session du tuteur (DPI) | 8 | 3 affirmations exactes × 2 + 2 |
-   | 6 | Tribunal administratif | 4 | arguments de défense rejetés |
+   | 5 | Audit de sécurité en EHPAD (DPI) | 8 | 5 affirmations vraies × 2 − 2 |
+   | 6 | Tribunal administratif | 7 | 5 arguments de défense rejetés + 2 |
    | 7 | Crise sur Facebook (photo) | 7 | (6 réactions − 2 bonnes pratiques) + 3 |
    | 8 | Audit de viralité | 3 | (3 VRAI × 3 − 3 FAUX × 1) − 3 |
    | 9 | Vidéo TikTok (vraie vidéo) | 5 | règles de la Charte transgressées |
 
-3. **Cadenas final** : code `739284735`.
+3. **Cadenas final** : code `739287735`.
 4. **Débriefing** : temps réalisé, indices utilisés, erreurs, les 9 points de droit et fiche imprimable « Les 5 règles d'or ».
 
 La progression et le chrono sont enregistrés dans le navigateur (`localStorage`). Un rafraîchissement de la page ne fait rien perdre. Après 60 minutes, la partie continue en temps additionnel.
