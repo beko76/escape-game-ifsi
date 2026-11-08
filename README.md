@@ -24,9 +24,9 @@ Escape game numérique sur la confidentialité médicale, la législation en san
 
 La progression et le chrono sont enregistrés dans l'onglet (`sessionStorage`). Un rafraîchissement de la page ne fait rien perdre, mais fermer l'onglet clôture la partie : à la réouverture, le jeu repart de l'accueil. Après 45 minutes, la partie continue en temps additionnel.
 
-**Blocage après 3 erreurs** : pour éviter que les équipes testent tous les chiffres, une énigme est bloquée après 3 réponses fausses (réglable avec `MAX_ATTEMPTS` dans [src/game/config.ts](src/game/config.ts)). Les autres énigmes restent jouables. Pour débloquer :
+**Blocage après 3 erreurs** : pour éviter que les joueurs testent tous les chiffres, une énigme est bloquée après 3 réponses fausses (réglable avec `MAX_ATTEMPTS` dans [src/game/config.ts](src/game/config.ts)). Les autres énigmes restent jouables. Pour débloquer :
 
-- **à distance** : l'équipe apparaît dans un bandeau « Demandes de déblocage » du tableau de bord enseignant (avec un bip). Le bouton « Débloquer » lui rend 3 essais en quelques secondes ;
+- **à distance** : le joueur apparaît dans un bandeau « Demandes de déblocage » du tableau de bord enseignant (avec un bip). Le bouton « Débloquer » lui rend 3 essais en quelques secondes ;
 - **sur place** : lien « Déblocage sur place par l'enseignant » sous l'énigme bloquée, puis mot de passe enseignant. Fonctionne aussi sans code de séance.
 
 La **Bibliothèque légale** (en-tête) regroupe les textes utiles et la synthèse du guide MACSF. Le bouton 🔊 coupe ou réactive les sons.

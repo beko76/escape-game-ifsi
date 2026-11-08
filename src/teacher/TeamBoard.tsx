@@ -146,7 +146,7 @@ export function TeamBoard({ code }: { code: string }) {
     await supabase!.from(TABLES.teams).delete().eq('id', t.id)
   }
 
-  /** Accorde 3 nouveaux essais : l'équipe reçoit le déblocage en quelques secondes. */
+  /** Accorde 3 nouveaux essais : le joueur reçoit le déblocage en quelques secondes. */
   const unlock = async (t: TeamRow, id: number) => {
     const unlocks = { ...(t.unlocks ?? {}), [id]: (t.unlocks?.[id] ?? 0) + 1 }
     setTeams((ts) => ts?.map((x) => (x.id === t.id ? { ...x, unlocks, locked: x.locked?.filter((l) => l !== id) } : x)) ?? ts)
@@ -220,7 +220,7 @@ export function TeamBoard({ code }: { code: string }) {
                     <li key={`${team.id}-${id}`} className="flex flex-wrap items-center gap-3 rounded-lg border border-warn/30 bg-slate-950/60 px-3 py-2">
                       <Lock className="size-4 shrink-0 text-warn" />
                       <span className="text-sm text-slate-200">
-                        <strong className="text-white">{team.team}</strong> est bloquée sur l'énigme {id}
+                        <strong className="text-white">{team.team}</strong> est bloqué sur l'énigme {id}
                         {e ? ` · ${e.title}` : ''} (3 erreurs)
                       </span>
                       <button
