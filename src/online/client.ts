@@ -31,6 +31,10 @@ export interface TeamRow {
   errors: number
   hints: number
   lock_attempts: number
+  /** Énigmes bloquées après trop d'essais (absent si la base n'est pas encore migrée) */
+  locked?: number[]
+  /** Déblocages accordés par l'enseignant : { "3": 1 } (écrit uniquement par le tableau de bord) */
+  unlocks?: Record<string, number>
   updated_at: string
 }
 

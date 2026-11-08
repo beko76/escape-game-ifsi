@@ -1,7 +1,8 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
 import { uuid } from '../online/client'
 import { useProgressSync, type SyncStatus } from '../online/useProgressSync'
-import { ENIGMAS, GAME_DURATION_MS, STORAGE_KEY, type EnigmaId } from './config'
+import { useRemoteUnlocks } from '../online/useRemoteUnlocks'
+import { ENIGMAS, GAME_DURATION_MS, MAX_ATTEMPTS, STORAGE_KEY, type EnigmaId } from './config'
 
 export type Phase = 'briefing' | 'playing' | 'won'
 
@@ -18,6 +19,10 @@ export interface GameState {
   view: EnigmaId | 'lock' | null
   solved: Partial<Record<EnigmaId, boolean>>
   errors: Partial<Record<EnigmaId, number>>
+  /** Essais ratés depuis le dernier déblocage (blocage à MAX_ATTEMPTS) */
+  strikes: Partial<Record<EnigmaId, number>>
+  /** Nombre de déblocages à distance déjà appliqués, par énigme */
+  unlocksSeen: Partial<Record<EnigmaId, number>>
   hints: EnigmaId[]
   lockAttempts: number
   timeUpAcknowledged: boolean
@@ -33,6 +38,8 @@ const INITIAL: GameState = {
   view: null,
   solved: {},
   errors: {},
+  strikes: {},
+  unlocksSeen: {},
   hints: [],
   lockAttempts: 0,
   timeUpAcknowledged: false,
@@ -65,12 +72,16 @@ interface GameApi {
   elapsedMs: number
   solvedCount: number
   allSolved: boolean
+  /** Énigmes bloquées (trop d'essais), en attente de l'enseignant */
+  locked: EnigmaId[]
   sync: SyncStatus
   start: (team: string, session: string | null) => void
   open: (view: GameState['view']) => void
   solve: (id: EnigmaId) => void
   addError: (id: EnigmaId) => void
   takeHint: (id: EnigmaId) => void
+  /** Déblocage sur place (mot de passe enseignant saisi sur l'appareil) */
+  unlock: (id: EnigmaId) => void
   failLock: () => void
   win: () => void
   acknowledgeTimeUp: () => void
@@ -99,6 +110,29 @@ export function GameProvider({ children }: { children: ReactNode }) {
 
   const sync = useProgressSync(state)
 
+  // Déblocages envoyés depuis le tableau de bord enseignant
+  const applyRemoteUnlocks = useCallback((unlocks: Partial<Record<EnigmaId, number>>) => {
+    setState((s) => {
+      let changed = false
+      const strikes = { ...s.strikes }
+      const unlocksSeen = { ...s.unlocksSeen }
+      for (const [k, n] of Object.entries(unlocks)) {
+        const id = Number(k) as EnigmaId
+        if ((n ?? 0) > (s.unlocksSeen[id] ?? 0)) {
+          unlocksSeen[id] = n
+          strikes[id] = 0
+          changed = true
+        }
+      }
+      return changed ? { ...s, strikes, unlocksSeen } : s
+    })
+  }, [])
+  const locked = useMemo(
+    () => ENIGMAS.filter((e) => !state.solved[e.id] && (state.strikes[e.id] ?? 0) >= MAX_ATTEMPTS).map((e) => e.id),
+    [state.solved, state.strikes],
+  )
+  useRemoteUnlocks(state.session ? state.teamId : null, locked.length > 0, applyRemoteUnlocks)
+
   const update = useCallback((fn: (s: GameState) => GameState) => setState(fn), [])
 
   const api = useMemo<GameApi>(() => {
@@ -112,6 +146,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
       remainingMs: GAME_DURATION_MS - elapsedMs,
       solvedCount,
       allSolved: solvedCount === ENIGMAS.length,
+      locked,
       sync,
       start: (team, session) =>
         update(() => ({
@@ -127,7 +162,13 @@ export function GameProvider({ children }: { children: ReactNode }) {
         update((s) => ({ ...s, view }))
       },
       solve: (id) => update((s) => ({ ...s, solved: { ...s.solved, [id]: true } })),
-      addError: (id) => update((s) => ({ ...s, errors: { ...s.errors, [id]: (s.errors[id] ?? 0) + 1 } })),
+      addError: (id) =>
+        update((s) => ({
+          ...s,
+          errors: { ...s.errors, [id]: (s.errors[id] ?? 0) + 1 },
+          strikes: { ...s.strikes, [id]: (s.strikes[id] ?? 0) + 1 },
+        })),
+      unlock: (id) => update((s) => ({ ...s, strikes: { ...s.strikes, [id]: 0 } })),
       takeHint: (id) => update((s) => (s.hints.includes(id) ? s : { ...s, hints: [...s.hints, id] })),
       failLock: () => update((s) => ({ ...s, lockAttempts: s.lockAttempts + 1 })),
       win: () => update((s) => ({ ...s, phase: 'won', finishedAt: Date.now(), view: null })),
@@ -141,7 +182,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
         setState(INITIAL)
       },
     }
-  }, [state, now, sync, update])
+  }, [state, now, sync, locked, update])
 
   return <Ctx.Provider value={api}>{children}</Ctx.Provider>
 }

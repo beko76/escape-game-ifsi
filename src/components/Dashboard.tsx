@@ -7,7 +7,7 @@ import { Button } from './ui/button'
 import { Card } from './ui/card'
 
 export function Dashboard() {
-  const { state, open, solvedCount, allSolved } = useGame()
+  const { state, open, solvedCount, allSolved, locked } = useGame()
   const left = ENIGMAS.length - solvedCount
 
   return (
@@ -37,6 +37,7 @@ export function Dashboard() {
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {ENIGMAS.map((e, i) => {
           const solved = !!state.solved[e.id]
+          const isLocked = locked.includes(e.id)
           return (
             <motion.button
               key={e.id}
@@ -48,7 +49,7 @@ export function Dashboard() {
               whileHover={{ y: -4 }}
               className={cn(
                 'group relative flex cursor-pointer flex-col overflow-hidden rounded-2xl border bg-panel/80 p-5 text-left transition-colors',
-                solved ? 'border-med/50 glow-med' : 'border-line hover:border-neon/60',
+                solved ? 'border-med/50 glow-med' : isLocked ? 'border-warn/60' : 'border-line hover:border-neon/60',
               )}
             >
               <div className="flex items-start justify-between">
@@ -69,6 +70,10 @@ export function Dashboard() {
                   <span className="flex items-center gap-2 text-sm text-med">
                     <CheckCircle2 className="size-4" /> Chiffre {e.id} :
                     <span className="rounded-md bg-slate-950 px-2 font-mono text-lg font-bold">{e.answer}</span>
+                  </span>
+                ) : isLocked ? (
+                  <span className="flex items-center gap-2 text-sm text-warn">
+                    <Lock className="size-4" /> Bloquée : appelez l'enseignant
                   </span>
                 ) : (
                   <span className="text-sm text-slate-400">Chiffre {e.id} : <span className="font-mono">?</span></span>

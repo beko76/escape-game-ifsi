@@ -24,6 +24,11 @@ Escape game numérique sur la confidentialité médicale, la législation en san
 
 La progression et le chrono sont enregistrés dans l'onglet (`sessionStorage`). Un rafraîchissement de la page ne fait rien perdre, mais fermer l'onglet clôture la partie : à la réouverture, le jeu repart de l'accueil. Après 45 minutes, la partie continue en temps additionnel.
 
+**Blocage après 3 erreurs** : pour éviter que les équipes testent tous les chiffres, une énigme est bloquée après 3 réponses fausses (réglable avec `MAX_ATTEMPTS` dans [src/game/config.ts](src/game/config.ts)). Les autres énigmes restent jouables. Pour débloquer :
+
+- **à distance** : l'équipe apparaît dans un bandeau « Demandes de déblocage » du tableau de bord enseignant (avec un bip). Le bouton « Débloquer » lui rend 3 essais en quelques secondes ;
+- **sur place** : lien « Déblocage sur place par l'enseignant » sous l'énigme bloquée, puis mot de passe enseignant. Fonctionne aussi sans code de séance.
+
 La **Bibliothèque légale** (en-tête) regroupe les textes utiles et la synthèse du guide MACSF. Le bouton 🔊 coupe ou réactive les sons.
 
 Les photos des énigmes 1 et 7 sont dans [src/assets/images/](src/assets/images/).
@@ -68,6 +73,8 @@ Le suivi utilise [Supabase](https://supabase.com), avec l'offre gratuite.
    ```
 
    La clé *anon* est publique par nature : elle peut être commitée, l'accès étant limité par les règles de la base.
+
+5. Pour le déblocage à distance des énigmes, exécutez aussi [supabase/migrations/20261108000000_blocage_enigmes.sql](supabase/migrations/20261108000000_blocage_enigmes.sql) dans le **SQL Editor**. Sans ce script, le suivi continue de fonctionner mais le déblocage se fait seulement sur place.
 
 Sans ces variables, l'application fonctionne entièrement hors ligne, sans suivi.
 

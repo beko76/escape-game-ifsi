@@ -1,9 +1,10 @@
 import { AnimatePresence, motion } from 'framer-motion'
-import { CheckCircle2, Clock, Lightbulb, Lock, Medal, Radio, Trash2, Users, WifiOff, XCircle } from 'lucide-react'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { BellRing, CheckCircle2, Clock, Lightbulb, Lock, LockOpen, Medal, Radio, Trash2, Users, WifiOff, XCircle } from 'lucide-react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Card } from '../components/ui/card'
 import { ENIGMAS, GAME_DURATION_MS } from '../game/config'
 import { supabase, TABLES, type TeamRow } from '../online/client'
+import { sound } from '../lib/sound'
 import { cn, formatDuration } from '../lib/utils'
 
 /** Au-delà, un joueur sans « battement de cœur » est signalé comme déconnecté. */
@@ -60,15 +61,17 @@ function Progress({ team }: { team: TeamRow }) {
     <div className="flex items-center gap-1">
       {ENIGMAS.map((e) => {
         const solved = team.solved.includes(e.id)
+        const blocked = !solved && !!team.locked?.includes(e.id)
         const here = !team.finished_at && team.current_view === String(e.id)
         return (
           <span
             key={e.id}
-            title={`${e.title}${solved ? ' : résolue' : here ? ' : en cours' : ''}`}
+            title={`${e.title}${solved ? ' : résolue' : blocked ? ' : bloquée (3 erreurs)' : here ? ' : en cours' : ''}`}
             className={cn(
               'grid size-7 place-items-center rounded-md border font-mono text-xs font-bold',
               solved ? 'border-med/60 bg-med/20 text-med' : 'border-line bg-slate-950 text-slate-600',
               here && 'border-neon text-neon glow-neon',
+              blocked && 'border-warn bg-warn/20 text-warn',
             )}
           >
             {e.id}
@@ -143,6 +146,32 @@ export function TeamBoard({ code }: { code: string }) {
     await supabase!.from(TABLES.teams).delete().eq('id', t.id)
   }
 
+  /** Accorde 3 nouveaux essais : l'équipe reçoit le déblocage en quelques secondes. */
+  const unlock = async (t: TeamRow, id: number) => {
+    const unlocks = { ...(t.unlocks ?? {}), [id]: (t.unlocks?.[id] ?? 0) + 1 }
+    setTeams((ts) => ts?.map((x) => (x.id === t.id ? { ...x, unlocks, locked: x.locked?.filter((l) => l !== id) } : x)) ?? ts)
+    const { error } = await supabase!.from(TABLES.teams).update({ unlocks }).eq('id', t.id)
+    if (error) {
+      alert(
+        error.code === 'PGRST204'
+          ? "Le déblocage à distance n'est pas encore activé dans la base Supabase (voir README). Débloquez sur place avec le mot de passe enseignant."
+          : `Déblocage impossible : ${error.message}`,
+      )
+      void fetchTeams()
+    }
+  }
+
+  const requests = ranked.flatMap((t) =>
+    t.finished_at ? [] : (t.locked ?? []).filter((id) => !t.solved.includes(id)).map((id) => ({ team: t, id })),
+  )
+
+  // Bip à chaque nouvelle demande de déblocage
+  const lastRequests = useRef(0)
+  useEffect(() => {
+    if (requests.length > lastRequests.current) sound.alarm()
+    lastRequests.current = requests.length
+  }, [requests.length])
+
   const finished = ranked.filter((t) => t.finished_at)
   const best = finished[0]
   const stats = [
@@ -175,6 +204,40 @@ export function TeamBoard({ code }: { code: string }) {
           </Card>
         ))}
       </div>
+
+      <AnimatePresence initial={false}>
+        {requests.length > 0 && (
+          <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
+            <Card className="border-warn/60 bg-warn/10 p-4">
+              <p className="flex items-center gap-2 font-semibold text-amber-100">
+                <BellRing className="blink-alert size-5 shrink-0 text-warn" />
+                Demande{requests.length > 1 ? 's' : ''} de déblocage
+              </p>
+              <ul className="mt-3 space-y-2">
+                {requests.map(({ team, id }) => {
+                  const e = ENIGMAS.find((x) => x.id === id)
+                  return (
+                    <li key={`${team.id}-${id}`} className="flex flex-wrap items-center gap-3 rounded-lg border border-warn/30 bg-slate-950/60 px-3 py-2">
+                      <Lock className="size-4 shrink-0 text-warn" />
+                      <span className="text-sm text-slate-200">
+                        <strong className="text-white">{team.team}</strong> est bloquée sur l'énigme {id}
+                        {e ? ` · ${e.title}` : ''} (3 erreurs)
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => unlock(team, id)}
+                        className="ml-auto inline-flex cursor-pointer items-center gap-1.5 rounded-lg bg-warn px-3 py-1.5 text-sm font-semibold text-slate-950 hover:bg-amber-300"
+                      >
+                        <LockOpen className="size-4" /> Débloquer
+                      </button>
+                    </li>
+                  )
+                })}
+              </ul>
+            </Card>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <Card className="overflow-hidden">
         <div className="flex items-center justify-between gap-3 border-b border-line px-5 py-3">

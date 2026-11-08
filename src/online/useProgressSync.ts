@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import { ENIGMAS, MAX_ATTEMPTS } from '../game/config'
 import type { GameState } from '../game/GameContext'
 import { supabase, TABLES, type TeamRow } from './client'
 
@@ -6,7 +7,12 @@ export type SyncStatus = 'off' | 'pending' | 'ok' | 'error'
 
 const HEARTBEAT_MS = 30_000
 
-function toRow(s: GameState): Omit<TeamRow, 'updated_at'> | null {
+type Row = Omit<TeamRow, 'updated_at' | 'unlocks'>
+
+/** Base pas encore migrée (colonne « locked » absente) : on envoie la progression sans elle. */
+let legacySchema = false
+
+function toRow(s: GameState): Row | null {
   if (!s.session || !s.teamId || s.phase === 'briefing' || !s.startedAt) return null
   return {
     id: s.teamId,
@@ -23,6 +29,7 @@ function toRow(s: GameState): Omit<TeamRow, 'updated_at'> | null {
     errors: Object.values(s.errors).reduce((a, b) => a + (b ?? 0), 0),
     hints: s.hints.length,
     lock_attempts: s.lockAttempts,
+    locked: ENIGMAS.filter((e) => !s.solved[e.id] && (s.strikes[e.id] ?? 0) >= MAX_ATTEMPTS).map((e) => e.id),
   }
 }
 
@@ -40,12 +47,19 @@ export function useProgressSync(state: GameState): SyncStatus {
       setStatus('off')
       return
     }
-    const payload = JSON.parse(key) as Omit<TeamRow, 'updated_at'>
+    const payload = JSON.parse(key) as Row
     let cancelled = false
     setStatus((s) => (s === 'off' ? 'pending' : s))
 
     const send = async () => {
-      const { error } = await supabase!.from(TABLES.teams).upsert({ ...payload, updated_at: new Date().toISOString() })
+      const row: Partial<Row> = { ...payload }
+      if (legacySchema) delete row.locked
+      let { error } = await supabase!.from(TABLES.teams).upsert({ ...row, updated_at: new Date().toISOString() })
+      if (error?.code === 'PGRST204' && !legacySchema) {
+        legacySchema = true
+        delete row.locked
+        ;({ error } = await supabase!.from(TABLES.teams).upsert({ ...row, updated_at: new Date().toISOString() }))
+      }
       if (!cancelled) setStatus(error ? 'error' : 'ok')
     }
 
